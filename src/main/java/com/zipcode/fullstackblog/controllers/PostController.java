@@ -8,34 +8,34 @@ import java.util.*;
 
 public class PostController {
 
-    private PostService serv;
+    private static PostService serv;
 
     @Autowired
-    public PostController(PostService serv) {
-        this.serv = serv;
+    public PostController(PostService ser) {
+        serv = ser;
     }
 
-    public void save(Post post) {
-
-    }
-
-    public void saveAll(List<Post> posts) {
+    public  static void save(Post post) {
 
     }
 
-    public void delete(Post post) {
+    public  static void saveAll(List<Post> posts) {
 
     }
 
-    public void deleteAll() {
+    public static  void delete(Post post) {
 
     }
 
-    public List<Post> findAll() {
+    public static  void deleteAll() {
+
+    }
+
+    public  static List<Post> findAll() {
         return null;
     }
 
-    public Integer count() {
+    public  static Integer count() {
         return 0;
     }
 }

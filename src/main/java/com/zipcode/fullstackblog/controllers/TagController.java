@@ -8,34 +8,34 @@ import java.util.*;
 
 public class TagController {
 
-    private TagService serv;
+    private static TagService serv;
 
     @Autowired
-    public TagController(TagService serv) {
-        this.serv = serv;
+    public TagController(TagService ser) {
+        serv = ser;
     }
 
-    public void save(Tag tag) {
-
-    }
-
-    public void saveAll(List<Tag> tags) {
+    public static void save(Tag tag) {
 
     }
 
-    public void delete(Tag tag) {
+    public static void saveAll(List<Tag> tags) {
 
     }
 
-    public void deleteAll() {
+    public static void delete(Tag tag) {
 
     }
 
-    public List<Tag> findAll() {
+    public static void deleteAll() {
+
+    }
+
+    public static List<Tag> findAll() {
         return null;
     }
 
-    public Integer count() {
+    public static Integer count() {
         return 0;
     }
 

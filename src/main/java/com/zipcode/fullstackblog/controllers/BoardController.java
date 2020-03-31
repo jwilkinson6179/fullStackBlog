@@ -8,34 +8,34 @@ import java.util.*;
 
 public class BoardController {
 
-    private BoardService serv;
+    private static BoardService serv;
 
     @Autowired
-    public BoardController(BoardService serv) {
-        this.serv = serv;
+    public BoardController(BoardService ser) {
+        serv = ser;
     }
 
-    public void save(Board board) {
-
-    }
-
-    public void saveAll(List<Board> boards) {
+    public static void save(Board board) {
 
     }
 
-    public void delete(Board board) {
+    public static  void saveAll(List<Board> boards) {
 
     }
 
-    public void deleteAll() {
+    public static  void delete(Board board) {
 
     }
 
-    public List<Board> findAll() {
+    public static  void deleteAll() {
+
+    }
+
+    public static List<Board> findAll() {
         return null;
     }
 
-    public Integer count() {
+    public static  Integer count() {
         return 0;
     }
 }

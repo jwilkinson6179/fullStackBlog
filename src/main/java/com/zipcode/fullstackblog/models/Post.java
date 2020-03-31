@@ -21,6 +21,20 @@ public class Post
 
     public Post() {}
 
+    public Post(String header, String author, String text, String imageUrl) {
+        this.header = header;
+        this.author = author;
+        this.text = text;
+        this.imageUrl = imageUrl;
+        this.timestamp = LocalDate.now();
+        this.tags = new HashSet<>();
+    }
+
+
+    public void addTag(Tag tag) {
+        this.tags.add(tag);
+    }
+
     public Long getId()
     {
         return id;
