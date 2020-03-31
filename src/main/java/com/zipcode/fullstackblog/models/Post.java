@@ -8,8 +8,12 @@ import java.util.*;
 public class Post
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    private Board board;
+
     private String header;
     private String author;
     private String text;
@@ -20,6 +24,28 @@ public class Post
 
     public Post()
     {
+    }
+
+    public Post(String header, String author, String text, String imageUrl) {
+        this.header = header;
+        this.author = author;
+        this.text = text;
+        this.imageUrl = imageUrl;
+        this.timestamp = LocalDate.now();
+        this.tags = new HashSet<>();
+    }
+
+
+    public void addTag(Tag tag) {
+        this.tags.add(tag);
+    }
+
+    public void editPost(Post newPost) {
+        this.imageUrl = newPost.getImageUrl();
+        this.author = newPost.getAuthor();
+        this.text = newPost.getText();
+        this.header = newPost.getHeader();
+        this.tags = newPost.getTags();
     }
 
     public Long getId()
@@ -90,6 +116,14 @@ public class Post
     public void setTags(Set<Tag> tags)
     {
         this.tags = tags;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
     }
 
     @Override

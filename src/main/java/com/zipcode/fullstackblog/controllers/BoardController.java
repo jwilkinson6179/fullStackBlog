@@ -3,39 +3,37 @@ package com.zipcode.fullstackblog.controllers;
 import com.zipcode.fullstackblog.models.*;
 import com.zipcode.fullstackblog.services.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
 
+@RestController
 public class BoardController {
 
-    private BoardService serv;
+    private static BoardService serv;
 
     @Autowired
-    public BoardController(BoardService serv) {
-        this.serv = serv;
+    public BoardController(BoardService ser) {
+        serv = ser;
     }
 
-    public void save(Board board) {
-
-    }
-
-    public void saveAll(List<Board> boards) {
+    public static void save(Board board) {
 
     }
 
-    public void delete(Board board) {
+    public static  void saveAll(List<Board> boards) {
 
     }
 
-    public void deleteAll() {
+    public static  void delete(Board board) {
 
     }
 
-    public List<Board> findAll() {
+    public static List<Board> findAll() {
         return null;
     }
 
-    public Integer count() {
+    public static  Integer count() {
         return 0;
     }
 }

@@ -7,21 +7,22 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.Optional;
 
+@RestController
 public class PostController
 {
-
-    private PostService postService;
+    private static PostService postService;
 
     @Autowired
-    public PostController(PostService postService)
+    public PostController(PostService serv)
     {
-        this.postService = postService;
+        postService = serv;
     }
 
     @GetMapping("/posts")
@@ -31,26 +32,26 @@ public class PostController
     }
 
     @GetMapping("/posts/{id}")
-    public ResponseEntity<?> getPost(@PathVariable Long postId)
+    public static ResponseEntity<?> getPost(@PathVariable Long postId)
     {
         Optional<Post> p = postService.findById(postId);
         return new ResponseEntity<> (p, HttpStatus.OK);
     }
 
-    @GetMapping("/posts/{id}")
-    public ResponseEntity<?> findById(@PathVariable long id)
-    {
-        return this.postService.findById(id)
-                .map(post -> ResponseEntity
-                        .ok()
-                        .body(post))
-                .orElse(ResponseEntity
-                        .notFound()
-                        .build());
-    }
+//    @GetMapping("/posts/{id}")
+//    public ResponseEntity<?> findById(@PathVariable long id)
+//    {
+//        return this.postService.findById(id)
+//                .map(post -> ResponseEntity
+//                        .ok()
+//                        .body(post))
+//                .orElse(ResponseEntity
+//                        .notFound()
+//                        .build());
+//    }
 
     @Valid
-    @PostMapping("/post")
+    @PostMapping("/posts")
     public ResponseEntity<?> save(Post post)
     {
         post = postService.create(post);

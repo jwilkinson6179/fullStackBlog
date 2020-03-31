@@ -3,6 +3,8 @@ package com.zipcode.fullstackblog.repositories;
 
 import com.zipcode.fullstackblog.models.Tag;
 import org.springframework.data.jpa.repository.*;
+import org.springframework.stereotype.Repository;
 
-public interface TagRepository extends JpaRepository<Tag, Long> {
+@Repository
+public interface TagRepository extends JpaRepository<Tag, Long>{
 }

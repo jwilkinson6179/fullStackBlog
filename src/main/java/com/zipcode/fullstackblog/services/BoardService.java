@@ -3,9 +3,11 @@ package com.zipcode.fullstackblog.services;
 import com.zipcode.fullstackblog.models.*;
 import com.zipcode.fullstackblog.repositories.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+@Service
 public class BoardService {
 
     private BoardRepository repo;
@@ -24,10 +26,6 @@ public class BoardService {
     }
 
     public void delete(Board board) {
-
-    }
-
-    public void deleteAll() {
 
     }
 

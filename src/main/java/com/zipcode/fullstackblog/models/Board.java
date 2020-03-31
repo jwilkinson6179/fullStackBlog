@@ -81,8 +81,7 @@ public class Board {
     public Boolean editPost(Post postToEdit, Post updatedPost) {
         for (Post post : posts) {
             if (post.equals(postToEdit)) {
-                post = updatedPost;
-                // actually update post
+                post.editPost(updatedPost);
                 return true;
             }
         }
@@ -92,8 +91,7 @@ public class Board {
     public Boolean editPost(Long postToEdit, Post updatedPost) {
         for (Post post : posts) {
             if (post.getId().equals(postToEdit)) {
-                post = updatedPost;
-                // actually update post
+                post.editPost(updatedPost);
                 return true;
             }
         }

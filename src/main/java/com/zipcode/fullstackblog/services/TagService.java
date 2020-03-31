@@ -3,9 +3,11 @@ package com.zipcode.fullstackblog.services;
 import com.zipcode.fullstackblog.models.*;
 import com.zipcode.fullstackblog.repositories.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+@Service
 public class TagService {
 
     private TagRepository repo;
@@ -24,10 +26,6 @@ public class TagService {
     }
 
     public void delete(Tag tag) {
-
-    }
-
-    public void deleteAll() {
 
     }
 
