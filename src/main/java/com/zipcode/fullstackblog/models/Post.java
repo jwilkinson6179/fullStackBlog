@@ -1,4 +1,4 @@
-package com.zipcode.fullstackblog.domain;
+package com.zipcode.fullstackblog.models;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -9,14 +9,14 @@ public class Post
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
-    String header;
-    String author;
-    String text;
-    String imageUrl;
-    LocalDate timestamp;
-    @OneToMany
-    Set<Tag> tags;
+    private Long id;
+    private String header;
+    private String author;
+    private String text;
+    private String imageUrl;
+    private LocalDate timestamp;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "post", targetEntity = Tag.class)
+    private Set<Tag> tags;
 
     public Post()
     {
