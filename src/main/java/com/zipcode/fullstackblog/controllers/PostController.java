@@ -65,4 +65,23 @@ public class PostController
         serv.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+/*        @GetMapping("/posts/{id}")
+    public ResponseEntity<?> findById(@PathVariable long id)
+    {
+        return this.postService.findById(id)
+                .map(post -> ResponseEntity
+                        .ok()
+                        .body(post))
+                .orElse(ResponseEntity
+                        .notFound()
+                        .build());
+    }
+
+        @DeleteMapping("/posts/all")
+    public ResponseEntity<?> deleteAll()
+    {
+        postService.deleteAll();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }*/
 }
