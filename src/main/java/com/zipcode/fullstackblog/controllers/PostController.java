@@ -30,6 +30,16 @@ public class PostController
         return serv.findAll(pageable);
     }
 
+    @GetMapping("/posts/{author}")
+    public static Page<Post> getAllPosts(Pageable pageable, @PathVariable String author) {
+        return null;
+    }
+
+    @GetMapping("/posts/{tag}")
+    public static Page<Post> getAllPosts(Pageable pageable, @PathVariable Tag tag) {
+        return null;
+    }
+
     @GetMapping("/posts/{id}")
     public static ResponseEntity<?> getPost(@PathVariable Long id)
     {
