@@ -11,42 +11,20 @@ import java.util.Optional;
 @Service
 public class PostService {
 
-    private PostRepository postRepository;
+    private PostRepository repo;
 
     @Autowired
-    public PostService(PostRepository postRepository)
-    {
-        this.postRepository = postRepository;
-    }
+    public PostService(PostRepository repo) { this.repo = repo; }
 
-    public Post create(Post car)
-    {
-        return this.postRepository.save(car);
-    }
+    public Post create(Post post) { return this.repo.save(post); }
 
-//    public void createAll(List<Post> listOfPosts)
-//    {
-//    }
+    public Page<Post> findAll(Pageable pageable) { return repo.findAll(pageable); }
 
-    public Page<Post> findAll(Pageable pageable)
-    {
-        return postRepository.findAll(pageable);
-    }
-
-    public Optional<Post> findById(long postId)
-    {
-        return this.postRepository.findById(postId);
-    }
+    public Optional<Post> findById(long postId) { return this.repo.findById(postId); }
 
     public Boolean delete(long pollId)
     {
-        this.postRepository.deleteById(pollId);
-
+        this.repo.deleteById(pollId);
         return findById(pollId).isPresent();
-    }
-
-    public Integer count()
-    {
-        return 0;
     }
 }
