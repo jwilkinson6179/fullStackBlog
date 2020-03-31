@@ -27,10 +27,6 @@ public class BoardService {
 
     }
 
-    public void deleteAll() {
-
-    }
-
     public List<Board> findAll() {
         return null;
     }

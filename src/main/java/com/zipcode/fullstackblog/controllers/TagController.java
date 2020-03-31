@@ -27,10 +27,6 @@ public class TagController {
 
     }
 
-    public static void deleteAll() {
-
-    }
-
     public static List<Tag> findAll() {
         return null;
     }

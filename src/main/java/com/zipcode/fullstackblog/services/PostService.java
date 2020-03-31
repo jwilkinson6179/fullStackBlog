@@ -27,7 +27,7 @@ public class PostService {
 
     }
 
-    public void deleteAll() {
+    public void editPost(Long id, Post updatedPost) {
 
     }
 

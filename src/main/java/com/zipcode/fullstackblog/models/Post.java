@@ -35,6 +35,14 @@ public class Post
         this.tags.add(tag);
     }
 
+    public void editPost(Post newPost) {
+        this.imageUrl = newPost.getImageUrl();
+        this.author = newPost.getAuthor();
+        this.text = newPost.getText();
+        this.header = newPost.getHeader();
+        this.tags = newPost.getTags();
+    }
+
     public Long getId()
     {
         return id;

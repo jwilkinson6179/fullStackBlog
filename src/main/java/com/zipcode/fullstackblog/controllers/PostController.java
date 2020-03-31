@@ -27,7 +27,7 @@ public class PostController {
 
     }
 
-    public static  void deleteAll() {
+    public void editPost(Long id, Post updatedPost) {
 
     }
 

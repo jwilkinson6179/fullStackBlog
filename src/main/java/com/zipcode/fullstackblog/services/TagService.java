@@ -27,10 +27,6 @@ public class TagService {
 
     }
 
-    public void deleteAll() {
-
-    }
-
     public List<Tag> findAll() {
         return null;
     }

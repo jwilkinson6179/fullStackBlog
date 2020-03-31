@@ -27,10 +27,6 @@ public class BoardController {
 
     }
 
-    public static  void deleteAll() {
-
-    }
-
     public static List<Board> findAll() {
         return null;
     }
