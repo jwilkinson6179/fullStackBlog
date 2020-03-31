@@ -19,9 +19,12 @@ public class Application
 		postOne.addTag(tagA);
 		postOne.addTag(tagB);
 		postOne.addTag(tagC);
+		board.addPost(postOne);
 
 		BoardController.save(board);
 		Integer boardDBSize = BoardController.count();
+		Integer postDBSize = PostController.count();
 		System.out.println(boardDBSize);
+		System.out.println(postDBSize);
 	}
 }
