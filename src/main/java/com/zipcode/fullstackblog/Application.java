@@ -4,6 +4,8 @@ import com.zipcode.fullstackblog.controllers.*;
 import com.zipcode.fullstackblog.models.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @SpringBootApplication
 public class Application
@@ -19,9 +21,12 @@ public class Application
 		postOne.addTag(tagA);
 		postOne.addTag(tagB);
 		postOne.addTag(tagC);
+		board.addPost(postOne);
 
 		BoardController.save(board);
 		Integer boardDBSize = BoardController.count();
+//		Page<Post> postPages = PostController.getAllPosts();
 		System.out.println(boardDBSize);
+//		System.out.println(postDBSize);
 	}
 }

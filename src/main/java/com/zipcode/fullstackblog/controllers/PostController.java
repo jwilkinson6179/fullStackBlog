@@ -26,7 +26,7 @@ public class PostController
     }
 
     @GetMapping("/posts")
-    public Page<Post> getAllPosts(Pageable pageable)
+    public static Page<Post> getAllPosts(Pageable pageable)
     {
         return postService.findAll(pageable);
     }
