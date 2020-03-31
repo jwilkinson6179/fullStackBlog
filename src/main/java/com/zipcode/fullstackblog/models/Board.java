@@ -8,12 +8,12 @@ public class Board {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "board", targetEntity = Post.class)
-    List<Post> posts;
+    private List<Post> posts;
 
-    String title;
+    private String title;
 
     public Board() {}
 
@@ -38,7 +38,7 @@ public class Board {
         return this.posts.size();
     }
 
-    public ArrayList<Post> getAllPosts() {
+    public List<Post> getAllPosts() {
         return posts;
     }
 
