@@ -1,4 +1,6 @@
 package com.zipcode.fullstackblog.controllers;
 
-public class PostController {
+public class PostController
+{
+
 }
