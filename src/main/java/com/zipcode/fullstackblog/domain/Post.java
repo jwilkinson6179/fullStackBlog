@@ -15,6 +15,7 @@ public class Post
     String text;
     String imageUrl;
     LocalDate timestamp;
+    @OneToMany
     Set<Tag> tags;
 
     public Post()
