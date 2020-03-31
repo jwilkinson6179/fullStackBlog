@@ -1,8 +1,8 @@
 package com.zipcode.fullstackblog.repositories;
 
-import org.springframework.data.repository.PagingAndSortingRepository;
 import com.zipcode.fullstackblog.domain.Post;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface BoardRepository extends PagingAndSortingRepository<Post, Long>
+public interface BoardRepository extends JpaRepository<Post, Long>
 {
 }
