@@ -3,47 +3,90 @@ package com.zipcode.fullstackblog.controllers;
 import com.zipcode.fullstackblog.models.*;
 import com.zipcode.fullstackblog.services.*;
 import org.springframework.beans.factory.annotation.*;
-
-import java.util.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import javax.validation.Valid;
+import java.net.URI;
+import java.util.Optional;
 
 public class PostController
 {
 
-    private PostService serv;
+    private PostService postService;
 
     @Autowired
-    public PostController(PostService serv)
+    public PostController(PostService postService)
     {
-        this.serv = serv;
+        this.postService = postService;
     }
 
-    public void save(Post post)
+    @GetMapping("/posts")
+    public Page<Post> getAllPosts(Pageable pageable)
     {
-
+        return postService.findAll(pageable);
     }
 
-    public void saveAll(List<Post> posts)
+    @GetMapping("/posts/{id}")
+    public ResponseEntity<?> getPost(@PathVariable Long postId)
     {
-
+        Optional<Post> p = postService.findById(postId);
+        return new ResponseEntity<> (p, HttpStatus.OK);
     }
 
-    public void delete(Post post)
+    @GetMapping("/posts/{id}")
+    public ResponseEntity<?> findById(@PathVariable long id)
     {
-
+        return this.postService.findById(id)
+                .map(post -> ResponseEntity
+                        .ok()
+                        .body(post))
+                .orElse(ResponseEntity
+                        .notFound()
+                        .build());
     }
 
-    public void deleteAll()
+    @Valid
+    @PostMapping("/post")
+    public ResponseEntity<?> save(Post post)
     {
+        post = postService.create(post);
+        URI newPollUri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(post.getId())
+                .toUri();
 
+        return new ResponseEntity<>(newPollUri, HttpStatus.CREATED);
     }
 
-    public List<Post> findAll()
+    @PutMapping("/posts/{id}")
+    public ResponseEntity<?> editPost(@RequestBody Post post, @PathVariable Long postId)
     {
-        return null;
+        postService.create(post);
+        return new ResponseEntity<>(post, HttpStatus.CREATED);
     }
 
-    public Integer count()
+
+    @DeleteMapping("/posts/{id}")
+    public ResponseEntity<?> delete(Long postId)
     {
-        return 0;
+        postService.delete(postId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+//    @DeleteMapping("/posts/all")
+//    public ResponseEntity<?> deleteAll()
+//    {
+//        postService.deleteAll();
+//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//    }
+
+//    public Integer count()
+//    {
+//        return 0;
+//    }
 }

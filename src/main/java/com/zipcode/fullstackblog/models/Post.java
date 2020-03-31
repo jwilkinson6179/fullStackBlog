@@ -93,12 +93,14 @@ public class Post
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return this.text;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o)
+    {
         if (this == o) return true;
         if (!(o instanceof Post)) return false;
         Post post = (Post) o;
@@ -106,7 +108,8 @@ public class Post
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         return Objects.hash(getId());
     }
 }

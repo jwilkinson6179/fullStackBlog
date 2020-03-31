@@ -3,7 +3,11 @@ package com.zipcode.fullstackblog.services;
 import com.zipcode.fullstackblog.models.Post;
 import com.zipcode.fullstackblog.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
+import java.util.Optional;
 
 public class PostService {
 
@@ -15,29 +19,34 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-    public void save(Post post)
+    public Post create(Post car)
     {
+        return this.postRepository.save(car);
     }
 
-    public void saveAll(List<Post> listOfPosts)
+//    public void createAll(List<Post> listOfPosts)
+//    {
+//    }
+
+    public Page<Post> findAll(Pageable pageable)
     {
+        return postRepository.findAll(pageable);
     }
 
-    public void delete(Post post)
+    public Optional<Post> findById(long postId)
     {
+        return this.postRepository.findById(postId);
     }
 
-    public void deleteAll()
+    public Boolean delete(long pollId)
     {
+        this.postRepository.deleteById(pollId);
+
+        return findById(pollId).isPresent();
     }
 
-    public List<Post> findAll()
-    {
-        return null;
-    }
-
-    public Integer count()
-    {
-        return 0;
-    }
+//    public Integer count()
+//    {
+//        return 0;
+//    }
 }
