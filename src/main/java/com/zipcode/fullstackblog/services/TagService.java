@@ -3,9 +3,11 @@ package com.zipcode.fullstackblog.services;
 import com.zipcode.fullstackblog.models.*;
 import com.zipcode.fullstackblog.repositories.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.stereotype.*;
 
 import java.util.*;
 
+@Service
 public class TagService {
 
     private TagRepository repo;
