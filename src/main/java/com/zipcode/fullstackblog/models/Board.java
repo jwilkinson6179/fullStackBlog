@@ -57,7 +57,7 @@ public class Board {
     public ArrayList<Post> getPostsByName(String match) {
         ArrayList<Post> output = new ArrayList<>();
         for (Post post : posts) {
-            if (post.getTitle().equals(match)) {
+            if (post.getHeader().equals(match)) {
                 output.add(post);
             }
         }
