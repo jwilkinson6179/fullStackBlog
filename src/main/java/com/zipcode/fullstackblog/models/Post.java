@@ -8,8 +8,12 @@ import java.util.*;
 public class Post
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    private Board board;
+
     private String header;
     private String author;
     private String text;
@@ -111,6 +115,14 @@ public class Post
     public void setTags(Set<Tag> tags)
     {
         this.tags = tags;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
     }
 
     @Override
