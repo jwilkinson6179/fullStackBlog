@@ -1,41 +1,52 @@
 package com.zipcode.fullstackblog.services;
 
-import com.zipcode.fullstackblog.models.*;
-import com.zipcode.fullstackblog.repositories.*;
-import org.springframework.beans.factory.annotation.*;
+import com.zipcode.fullstackblog.models.Post;
+import com.zipcode.fullstackblog.repositories.PostRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import java.util.Optional;
 
-import java.util.*;
-
+@Service
 public class PostService {
 
-    private PostRepository repo;
+    private PostRepository postRepository;
 
     @Autowired
-    public PostService(PostRepository repo) {
-        this.repo = repo;
+    public PostService(PostRepository postRepository)
+    {
+        this.postRepository = postRepository;
     }
 
-    public void save(Post post) {
-
+    public Post create(Post car)
+    {
+        return this.postRepository.save(car);
     }
 
-    public void saveAll(List<Post> posts) {
+//    public void createAll(List<Post> listOfPosts)
+//    {
+//    }
 
+    public Page<Post> findAll(Pageable pageable)
+    {
+        return postRepository.findAll(pageable);
     }
 
-    public void delete(Post post) {
-
+    public Optional<Post> findById(long postId)
+    {
+        return this.postRepository.findById(postId);
     }
 
-    public void editPost(Long id, Post updatedPost) {
+    public Boolean delete(long pollId)
+    {
+        this.postRepository.deleteById(pollId);
 
+        return findById(pollId).isPresent();
     }
 
-    public List<Post> findAll() {
-        return null;
-    }
-
-    public Integer count() {
+    public Integer count()
+    {
         return 0;
     }
 }

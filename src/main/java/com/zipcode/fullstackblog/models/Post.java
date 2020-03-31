@@ -8,18 +8,23 @@ import java.util.*;
 public class Post
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    private Board board;
+
     private String header;
     private String author;
     private String text;
     private String imageUrl;
     private LocalDate timestamp;
-
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "post", targetEntity = Tag.class)
     private Set<Tag> tags;
 
-    public Post() {}
+    public Post()
+    {
+    }
 
     public Post(String header, String author, String text, String imageUrl) {
         this.header = header;
@@ -113,13 +118,23 @@ public class Post
         this.tags = tags;
     }
 
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
     @Override
-    public String toString() {
+    public String toString()
+    {
         return this.text;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o)
+    {
         if (this == o) return true;
         if (!(o instanceof Post)) return false;
         Post post = (Post) o;
@@ -127,7 +142,8 @@ public class Post
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         return Objects.hash(getId());
     }
 }
