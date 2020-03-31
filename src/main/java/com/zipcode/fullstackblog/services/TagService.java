@@ -6,24 +6,24 @@ import org.springframework.beans.factory.annotation.*;
 
 import java.util.*;
 
-public class PostService {
+public class TagService {
 
-    private PostRepository repo;
+    private TagRepository repo;
 
     @Autowired
-    public PostService(PostRepository repo) {
+    public TagService(TagRepository repo) {
         this.repo = repo;
     }
 
-    public void save(Post post) {
+    public void save(Tag tag) {
 
     }
 
-    public void saveAll(List<Post> posts) {
+    public void saveAll(List<Tag> tags) {
 
     }
 
-    public void delete(Post post) {
+    public void delete(Tag tag) {
 
     }
 
@@ -31,11 +31,12 @@ public class PostService {
 
     }
 
-    public List<Post> findAll() {
+    public List<Tag> findAll() {
         return null;
     }
 
     public Integer count() {
         return 0;
     }
+
 }

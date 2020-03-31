@@ -1,7 +1,7 @@
 package com.zipcode.fullstackblog.repositories;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.zipcode.fullstackblog.models.*;
+import org.springframework.data.jpa.repository.*;
 
-public interface TagRepository extends JpaRepository<Post, Long>
-{
+public interface TagRepository extends JpaRepository<Post, Long>{
 }

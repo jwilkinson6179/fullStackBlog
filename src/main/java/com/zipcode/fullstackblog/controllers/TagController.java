@@ -6,24 +6,24 @@ import org.springframework.beans.factory.annotation.*;
 
 import java.util.*;
 
-public class PostController {
+public class TagController {
 
-    private PostService serv;
+    private TagService serv;
 
     @Autowired
-    public PostController(PostService serv) {
+    public TagController(TagService serv) {
         this.serv = serv;
     }
 
-    public void save(Post post) {
+    public void save(Tag tag) {
 
     }
 
-    public void saveAll(List<Post> posts) {
+    public void saveAll(List<Tag> tags) {
 
     }
 
-    public void delete(Post post) {
+    public void delete(Tag tag) {
 
     }
 
@@ -31,11 +31,12 @@ public class PostController {
 
     }
 
-    public List<Post> findAll() {
+    public List<Tag> findAll() {
         return null;
     }
 
     public Integer count() {
         return 0;
     }
+
 }
