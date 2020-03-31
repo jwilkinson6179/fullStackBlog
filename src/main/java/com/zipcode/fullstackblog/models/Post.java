@@ -2,7 +2,7 @@ package com.zipcode.fullstackblog.models;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Post
@@ -90,5 +90,23 @@ public class Post
     public void setTags(Set<Tag> tags)
     {
         this.tags = tags;
+    }
+
+    @Override
+    public String toString() {
+        return this.text;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Post)) return false;
+        Post post = (Post) o;
+        return Objects.equals(getId(), post.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }

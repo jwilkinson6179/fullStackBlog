@@ -6,44 +6,36 @@ import org.springframework.beans.factory.annotation.*;
 
 import java.util.*;
 
-public class PostController
-{
+public class BoardController {
 
-    private PostService serv;
+    private BoardService serv;
 
     @Autowired
-    public PostController(PostService serv)
-    {
+    public BoardController(BoardService serv) {
         this.serv = serv;
     }
 
-    public void save(Post post)
-    {
+    public void save(Board board) {
 
     }
 
-    public void saveAll(List<Post> posts)
-    {
+    public void saveAll(List<Board> boards) {
 
     }
 
-    public void delete(Post post)
-    {
+    public void delete(Board board) {
 
     }
 
-    public void deleteAll()
-    {
+    public void deleteAll() {
 
     }
 
-    public List<Post> findAll()
-    {
+    public List<Board> findAll() {
         return null;
     }
 
-    public Integer count()
-    {
+    public Integer count() {
         return 0;
     }
 }
