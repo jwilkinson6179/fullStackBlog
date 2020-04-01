@@ -46,7 +46,7 @@ public class PostController
 
     @Valid
     @PostMapping("/posts")
-    public ResponseEntity<?> save(Post post)
+    public ResponseEntity<?> save(@RequestBody Post post)
     {
         post = serv.create(post);
         URI newPollUri = ServletUriComponentsBuilder
