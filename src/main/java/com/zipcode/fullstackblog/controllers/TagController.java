@@ -32,12 +32,12 @@ public class TagController {
     public static ResponseEntity<?> getTag(@PathVariable Long id)
     {
         Optional<Tag> p = serv.findById(id);
-        return new ResponseEntity<> (p, HttpStatus.OK);
+        return (p.isPresent()) ? new ResponseEntity<> (p, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @Valid
     @PostMapping("/tags")
-    public ResponseEntity<?> save(Tag tag)
+    public ResponseEntity<?> save(@RequestBody Tag tag)
     {
         tag = serv.create(tag);
         URI newPollUri = ServletUriComponentsBuilder
@@ -48,14 +48,6 @@ public class TagController {
 
         return new ResponseEntity<>(newPollUri, HttpStatus.CREATED);
     }
-
-    @PutMapping("/tags/{id}")
-    public ResponseEntity<?> editTag(@RequestBody Tag tag, @PathVariable Long id)
-    {
-        serv.create(tag);
-        return new ResponseEntity<>(tag, HttpStatus.CREATED);
-    }
-
 
     @DeleteMapping("/tags/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id)

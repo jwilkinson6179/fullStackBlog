@@ -45,14 +45,7 @@ public class PostController
     public static ResponseEntity<?> getPost(@PathVariable Long id)
     {
         Optional<Post> p = serv.findById(id);
-        if(p.isPresent())
-        {
-            return new ResponseEntity<> (p, HttpStatus.OK);
-        }
-        else
-        {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return (p.isPresent()) ? new ResponseEntity<> (p, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @Valid
@@ -83,13 +76,4 @@ public class PostController
         serv.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-
-/*
-        @DeleteMapping("/posts/all")
-    public ResponseEntity<?> deleteAll()
-    {
-        postService.deleteAll();
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }*/
 }

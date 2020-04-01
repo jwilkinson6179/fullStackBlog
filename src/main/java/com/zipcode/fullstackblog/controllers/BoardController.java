@@ -32,28 +32,28 @@ public class BoardController {
     public static ResponseEntity<?> getBoard(@PathVariable Long id)
     {
         Optional<Board> p = serv.findById(id);
-        return new ResponseEntity<> (p, HttpStatus.OK);
+        return (p.isPresent()) ? new ResponseEntity<> (p, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @Valid
     @PostMapping("/boards")
-    public ResponseEntity<?> save(Board tag)
+    public ResponseEntity<?> save(@RequestBody Board board)
     {
-        tag = serv.create(tag);
+        board = serv.create(board);
         URI newPollUri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(tag.getId())
+                .buildAndExpand(board.getId())
                 .toUri();
 
         return new ResponseEntity<>(newPollUri, HttpStatus.CREATED);
     }
 
     @PutMapping("/boards/{id}")
-    public ResponseEntity<?> editBoard(@RequestBody Board tag, @PathVariable Long id)
+    public ResponseEntity<?> editBoard(@RequestBody Board post, @PathVariable Long id)
     {
-        serv.create(tag);
-        return new ResponseEntity<>(tag, HttpStatus.CREATED);
+        serv.create(post);
+        return new ResponseEntity<>(post, HttpStatus.CREATED);
     }
 
 
