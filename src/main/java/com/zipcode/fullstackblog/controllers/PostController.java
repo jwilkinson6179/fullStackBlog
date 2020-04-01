@@ -55,13 +55,13 @@ public class PostController
     public ResponseEntity<?> save(@RequestBody Post post)
     {
         post = serv.create(post);
-        URI newPollUri = ServletUriComponentsBuilder
+        URI newPostUri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(post.getId())
                 .toUri();
 
-        return new ResponseEntity<>(newPollUri, HttpStatus.CREATED);
+        return new ResponseEntity<>(newPostUri, HttpStatus.CREATED);
     }
 
     @PutMapping("/posts/{id}")

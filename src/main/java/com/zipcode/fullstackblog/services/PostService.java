@@ -5,13 +5,12 @@ import com.zipcode.fullstackblog.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.*;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class PostService {
-
+public class PostService
+{
     private PostRepository repo;
 
     @Autowired
@@ -27,9 +26,9 @@ public class PostService {
         return repo.findAllByName(pageable, author);
     }
 
-    public Boolean delete(long pollId)
+    public Boolean delete(long postId)
     {
-        this.repo.deleteById(pollId);
-        return findById(pollId).isPresent();
+        this.repo.deleteById(postId);
+        return findById(postId).isPresent();
     }
 }
