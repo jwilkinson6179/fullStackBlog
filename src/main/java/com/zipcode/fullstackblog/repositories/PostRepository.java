@@ -12,5 +12,4 @@ public interface PostRepository extends JpaRepository<Post, Long>
 {
     @Query("SELECT t FROM Post t WHERE t.author = :author")
     Page<Post> findAllByName(Pageable page, @Param("author") String author);
-
 }

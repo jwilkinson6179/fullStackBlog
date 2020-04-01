@@ -45,7 +45,14 @@ public class PostController
     public static ResponseEntity<?> getPost(@PathVariable Long id)
     {
         Optional<Post> p = serv.findById(id);
-        return new ResponseEntity<> (p, HttpStatus.OK);
+        if(p.isPresent())
+        {
+            return new ResponseEntity<> (p, HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @Valid
@@ -77,18 +84,8 @@ public class PostController
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-/*        @GetMapping("/posts/{id}")
-    public ResponseEntity<?> findById(@PathVariable long id)
-    {
-        return this.postService.findById(id)
-                .map(post -> ResponseEntity
-                        .ok()
-                        .body(post))
-                .orElse(ResponseEntity
-                        .notFound()
-                        .build());
-    }
 
+/*
         @DeleteMapping("/posts/all")
     public ResponseEntity<?> deleteAll()
     {
