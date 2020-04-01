@@ -1,7 +1,13 @@
 package com.zipcode.fullstackblog.models;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
+import java.lang.annotation.RetentionPolicy;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
@@ -18,7 +24,10 @@ public class Post
     private String author;
     private String text;
     private String imageUrl;
-    private LocalDate timestamp;
+    @CreationTimestamp
+    private LocalDateTime createTimestamp;
+    @UpdateTimestamp
+    private LocalDateTime updateTimestamp;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "post", targetEntity = Tag.class)
     private Set<Tag> tags;
 
@@ -30,10 +39,10 @@ public class Post
         this.author = author;
         this.text = text;
         this.imageUrl = imageUrl;
-        this.timestamp = LocalDate.now();
+        this.createTimestamp = LocalDateTime.now();
+        this.updateTimestamp = null;
         this.tags = new HashSet<>();
     }
-
 
     public void addTag(Tag tag)
     {
@@ -97,12 +106,21 @@ public class Post
         this.imageUrl = imageUrl;
     }
 
-    public LocalDate getTimestamp() {
-        return timestamp;
+
+    public LocalDateTime getCreateTimestamp() {
+        return createTimestamp;
     }
 
-    public void setTimestamp(LocalDate timestamp) {
-        this.timestamp = timestamp;
+    public void setCreateTimestamp(LocalDateTime createTimestamp) {
+        this.createTimestamp = createTimestamp;
+    }
+
+    public LocalDateTime getUpdateTimestamp() {
+        return updateTimestamp;
+    }
+
+    public void setUpdateTimestamp(LocalDateTime updateTimestamp) {
+        this.updateTimestamp = updateTimestamp;
     }
 
     public Set<Tag> getTags() {
