@@ -3,6 +3,7 @@ package com.zipcode.fullstackblog.services;
 import com.zipcode.fullstackblog.models.*;
 import com.zipcode.fullstackblog.repositories.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 
@@ -18,24 +19,16 @@ public class BoardService {
         this.repo = repo;
     }
 
-    public void save(Board board) {
+    public Board create(Board board) { return this.repo.save(board); }
 
-    }
+    public Page<Board> findAll(Pageable pageable) { return repo.findAll(pageable); }
 
-    public void saveAll(List<Board> boards) {
+    public Optional<Board> findById(long boardId) { return this.repo.findById(boardId); }
 
-    }
-
-    public void delete(Board board) {
-
-    }
-
-    public List<Board> findAll() {
-        return null;
-    }
-
-    public Integer count() {
-        return 0;
+    public Boolean delete(long boardId)
+    {
+        this.repo.deleteById(boardId);
+        return findById(boardId).isPresent();
     }
 
 }

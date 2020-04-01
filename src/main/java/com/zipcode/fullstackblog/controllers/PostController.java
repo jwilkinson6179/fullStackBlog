@@ -3,11 +3,9 @@ package com.zipcode.fullstackblog.controllers;
 import com.zipcode.fullstackblog.models.*;
 import com.zipcode.fullstackblog.services.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
@@ -17,44 +15,44 @@ import java.util.Optional;
 @RestController
 public class PostController
 {
-    private static PostService postService;
+    private static PostService serv;
 
     @Autowired
-    public PostController(PostService serv)
+    public PostController(PostService ser)
     {
-        postService = serv;
+        serv = ser;
     }
 
     @GetMapping("/posts")
     public static Page<Post> getAllPosts(Pageable pageable)
     {
-        return postService.findAll(pageable);
+        return serv.findAll(pageable);
+    }
+
+    @GetMapping("/posts/authors/{author}")
+    public static Page<Post> getAllPosts(Pageable pageable, @PathVariable String author)
+    {
+        return serv.findAll(pageable, author);
+    }
+
+    @GetMapping("/posts/tags/{tag}")
+    public static Page<Post> getAllPosts(Pageable pageable, @PathVariable Tag tag)
+    {
+        return null;
     }
 
     @GetMapping("/posts/{id}")
-    public static ResponseEntity<?> getPost(@PathVariable Long postId)
+    public static ResponseEntity<?> getPost(@PathVariable Long id)
     {
-        Optional<Post> p = postService.findById(postId);
-        return new ResponseEntity<> (p, HttpStatus.OK);
+        Optional<Post> p = serv.findById(id);
+        return (p.isPresent()) ? new ResponseEntity<> (p, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
-//    @GetMapping("/posts/{id}")
-//    public ResponseEntity<?> findById(@PathVariable long id)
-//    {
-//        return this.postService.findById(id)
-//                .map(post -> ResponseEntity
-//                        .ok()
-//                        .body(post))
-//                .orElse(ResponseEntity
-//                        .notFound()
-//                        .build());
-//    }
 
     @Valid
     @PostMapping("/posts")
-    public ResponseEntity<?> save(Post post)
+    public ResponseEntity<?> save(@RequestBody Post post)
     {
-        post = postService.create(post);
+        post = serv.create(post);
         URI newPollUri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
@@ -65,29 +63,17 @@ public class PostController
     }
 
     @PutMapping("/posts/{id}")
-    public ResponseEntity<?> editPost(@RequestBody Post post, @PathVariable Long postId)
+    public ResponseEntity<?> editPost(@RequestBody Post post, @PathVariable Long id)
     {
-        postService.create(post);
+        serv.create(post);
         return new ResponseEntity<>(post, HttpStatus.CREATED);
     }
 
 
     @DeleteMapping("/posts/{id}")
-    public ResponseEntity<?> delete(Long postId)
+    public ResponseEntity<?> delete(@PathVariable Long id)
     {
-        postService.delete(postId);
+        serv.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-//    @DeleteMapping("/posts/all")
-//    public ResponseEntity<?> deleteAll()
-//    {
-//        postService.deleteAll();
-//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//    }
-
-//    public Integer count()
-//    {
-//        return 0;
-//    }
 }
