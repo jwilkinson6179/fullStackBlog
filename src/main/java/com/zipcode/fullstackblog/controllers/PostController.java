@@ -31,24 +31,24 @@ public class PostController
         return postService.findAll(pageable);
     }
 
-    @GetMapping("/posts/{id}")
-    public static ResponseEntity<?> getPost(@PathVariable Long postId)
-    {
-        Optional<Post> p = postService.findById(postId);
-        return new ResponseEntity<> (p, HttpStatus.OK);
-    }
-
 //    @GetMapping("/posts/{id}")
-//    public ResponseEntity<?> findById(@PathVariable long id)
+//    public static ResponseEntity<?> getPost(@PathVariable Long postId)
 //    {
-//        return this.postService.findById(id)
-//                .map(post -> ResponseEntity
-//                        .ok()
-//                        .body(post))
-//                .orElse(ResponseEntity
-//                        .notFound()
-//                        .build());
+//        Optional<Post> p = postService.findById(postId);
+//        return new ResponseEntity<> (p, HttpStatus.OK);
 //    }
+
+    @GetMapping("/posts/{id}")
+    public ResponseEntity<?> findById(@PathVariable long id)
+    {
+        return this.postService.findById(id)
+                .map(post -> ResponseEntity
+                        .ok()
+                        .body(post))
+                .orElse(ResponseEntity
+                        .notFound()
+                        .build());
+    }
 
     @Valid
     @PostMapping("/posts")
