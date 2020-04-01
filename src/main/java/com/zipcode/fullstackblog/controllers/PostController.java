@@ -3,8 +3,7 @@ package com.zipcode.fullstackblog.controllers;
 import com.zipcode.fullstackblog.models.*;
 import com.zipcode.fullstackblog.services.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,12 +29,10 @@ public class PostController
         return serv.findAll(pageable);
     }
 
-    @GetMapping("/posts/{author}")
-    public static Page<Post> getAllPosts(Pageable pageable, @PathVariable String author) {
-        return null;
-    }
+    @GetMapping("/posts/authors/{author}")
+    public static Page<Post> getAllPosts(Pageable pageable, @PathVariable String author) { return serv.findAll(pageable, author); }
 
-    @GetMapping("/posts/{tag}")
+    @GetMapping("/posts/tags/{tag}")
     public static Page<Post> getAllPosts(Pageable pageable, @PathVariable Tag tag) {
         return null;
     }
@@ -61,7 +58,7 @@ public class PostController
         return new ResponseEntity<>(newPollUri, HttpStatus.CREATED);
     }
 
-    @PutMapping("/posts/{id}")
+    @PutMapping("/posts/edit/{id}")
     public ResponseEntity<?> editPost(@RequestBody Post post, @PathVariable Long id)
     {
         serv.create(post);
@@ -69,7 +66,7 @@ public class PostController
     }
 
 
-    @DeleteMapping("/posts/{id}")
+    @DeleteMapping("/posts/del/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id)
     {
         serv.delete(id);

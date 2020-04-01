@@ -5,6 +5,7 @@ import com.zipcode.fullstackblog.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.*;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 
@@ -21,6 +22,10 @@ public class PostService {
     public Page<Post> findAll(Pageable pageable) { return repo.findAll(pageable); }
 
     public Optional<Post> findById(long postId) { return this.repo.findById(postId); }
+
+    public Page<Post> findAll(Pageable pageable, String author) {
+        return repo.findAllByName(pageable, author);
+    }
 
     public Boolean delete(long pollId)
     {
