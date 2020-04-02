@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long>
 {
-    @Query("SELECT t FROM Post t WHERE t.author = :author")
+    @Query("SELECT p FROM Post p WHERE p.author = :author")
     Page<Post> findAllByName(Pageable page, @Param("author") String author);
 }
