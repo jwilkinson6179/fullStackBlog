@@ -67,7 +67,7 @@ public class PostController
     public ResponseEntity<?> editPost(@RequestBody Post post, @PathVariable Long id)
     {
         serv.update(post, id);
-        return new ResponseEntity<>(post, HttpStatus.CREATED);
+        return new ResponseEntity<>(post, HttpStatus.OK);
     }
 
     @DeleteMapping("/posts/{id}")

@@ -29,7 +29,8 @@ public class PostService
 
     public Optional<Post> findById(long postId) { return this.repo.findById(postId); }
 
-    public Page<Post> findAll(Pageable pageable, String author) {
+    public Page<Post> findAll(Pageable pageable, String author)
+    {
         return repo.findAllByName(pageable, author);
     }
 
