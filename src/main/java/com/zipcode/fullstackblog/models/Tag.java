@@ -24,6 +24,15 @@ public class Tag {
 
     public Tag(String name) {
         this.name = name;
+        this.posts = new HashSet<>();
+
+    }
+
+    public Tag(Long id, String name) {
+        this.name = name;
+        this.id = id;
+        this.posts = new HashSet<>();
+
     }
 
     public Long getId() {

@@ -45,7 +45,6 @@ public class PostController
     public static ResponseEntity<?> getPost(@PathVariable Long id)
     {
         Optional<Post> p = serv.findById(id);
-
         return (p.isPresent()) ? new ResponseEntity<> (p, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
