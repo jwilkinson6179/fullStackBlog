@@ -49,7 +49,6 @@ public class PostService
                 })
                 .orElseGet(() ->
                 {
-                    newPost.setId(postId);
                     newPost.setCreateTimestamp(new Date());
                     return repo.save(newPost);
                 });
