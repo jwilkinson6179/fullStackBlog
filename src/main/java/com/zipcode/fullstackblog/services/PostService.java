@@ -1,22 +1,15 @@
 package com.zipcode.fullstackblog.services;
 
-import com.zipcode.fullstackblog.models.Board;
 import com.zipcode.fullstackblog.models.Post;
-import com.zipcode.fullstackblog.models.Tag;
 import com.zipcode.fullstackblog.repositories.PostRepository;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Optional;
-import java.util.Set;
+
 
 @Service
 public class PostService
@@ -26,7 +19,11 @@ public class PostService
     @Autowired
     public PostService(PostRepository repo) { this.repo = repo; }
 
-    public Post create(Post post) { return this.repo.save(post); }
+    public Post create(Post post)
+    {
+        post.setCreateTimestamp(new Date());
+        return this.repo.save(post);
+    }
 
     public Page<Post> findAll(Pageable pageable) { return repo.findAll(pageable); }
 
@@ -46,13 +43,14 @@ public class PostService
                     post.setAuthor(newPost.getAuthor());
                     post.setText(newPost.getText());
                     post.setImageUrl(newPost.getImageUrl());
-                    // TODO: Do I need to do updateTimestamp?
+                    post.setUpdateTimestamp(new Date());
                     post.setTags(newPost.getTags());
                     return repo.save(post);
                 })
                 .orElseGet(() ->
                 {
                     newPost.setId(postId);
+                    newPost.setCreateTimestamp(new Date());
                     return repo.save(newPost);
                 });
 

@@ -4,9 +4,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.lang.annotation.RetentionPolicy;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -24,11 +22,9 @@ public class Post
     private String text;
     private String imageUrl;
     @Temporal(TemporalType.TIMESTAMP)
-    @CreationTimestamp
-    private LocalDateTime createTimestamp;
+    private Date createTimestamp;
     @Temporal(TemporalType.TIMESTAMP)
-    @UpdateTimestamp
-    private LocalDateTime updateTimestamp;
+    private Date updateTimestamp;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "post", targetEntity = Tag.class)
     private Set<Tag> tags;
 
@@ -40,7 +36,7 @@ public class Post
         this.author = author;
         this.text = text;
         this.imageUrl = imageUrl;
-        this.createTimestamp = LocalDateTime.now();
+        this.createTimestamp = new Date();
         this.updateTimestamp = null;
         this.tags = new HashSet<>();
     }
@@ -108,19 +104,19 @@ public class Post
     }
 
 
-    public LocalDateTime getCreateTimestamp() {
+    public Date getCreateTimestamp() {
         return createTimestamp;
     }
 
-    public void setCreateTimestamp(LocalDateTime createTimestamp) {
+    public void setCreateTimestamp(Date createTimestamp) {
         this.createTimestamp = createTimestamp;
     }
 
-    public LocalDateTime getUpdateTimestamp() {
+    public Date getUpdateTimestamp() {
         return updateTimestamp;
     }
 
-    public void setUpdateTimestamp(LocalDateTime updateTimestamp) {
+    public void setUpdateTimestamp(Date updateTimestamp) {
         this.updateTimestamp = updateTimestamp;
     }
 
