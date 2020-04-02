@@ -66,10 +66,9 @@ public class PostController
     @PutMapping("/posts/{id}")
     public ResponseEntity<?> editPost(@RequestBody Post post, @PathVariable Long id)
     {
-        serv.create(post);
+        serv.update(post, id);
         return new ResponseEntity<>(post, HttpStatus.CREATED);
     }
-
 
     @DeleteMapping("/posts/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id)

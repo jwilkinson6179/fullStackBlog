@@ -19,13 +19,14 @@ public class Post
 
     @ManyToOne
     private Board board;
-
     private String header;
     private String author;
     private String text;
     private String imageUrl;
+    @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
     private LocalDateTime createTimestamp;
+    @Temporal(TemporalType.TIMESTAMP)
     @UpdateTimestamp
     private LocalDateTime updateTimestamp;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "post", targetEntity = Tag.class)

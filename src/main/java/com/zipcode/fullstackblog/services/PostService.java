@@ -1,12 +1,22 @@
 package com.zipcode.fullstackblog.services;
 
+import com.zipcode.fullstackblog.models.Board;
 import com.zipcode.fullstackblog.models.Post;
+import com.zipcode.fullstackblog.models.Tag;
 import com.zipcode.fullstackblog.repositories.PostRepository;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class PostService
@@ -24,6 +34,29 @@ public class PostService
 
     public Page<Post> findAll(Pageable pageable, String author) {
         return repo.findAllByName(pageable, author);
+    }
+
+    public Post update(Post newPost, Long postId)
+    {
+        Post updatedPost = repo.findById(postId)
+                .map(post ->
+                {
+                    post.setBoard(newPost.getBoard());
+                    post.setHeader(newPost.getHeader());
+                    post.setAuthor(newPost.getAuthor());
+                    post.setText(newPost.getText());
+                    post.setImageUrl(newPost.getImageUrl());
+                    // TODO: Do I need to do updateTimestamp?
+                    post.setTags(newPost.getTags());
+                    return repo.save(post);
+                })
+                .orElseGet(() ->
+                {
+                    newPost.setId(postId);
+                    return repo.save(newPost);
+                });
+
+        return updatedPost;
     }
 
     public Boolean delete(long postId)
