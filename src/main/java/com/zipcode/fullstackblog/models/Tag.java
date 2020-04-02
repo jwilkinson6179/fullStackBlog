@@ -1,5 +1,8 @@
 package com.zipcode.fullstackblog.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.*;
 
@@ -10,8 +13,10 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private Post post;
+    @ManyToMany(mappedBy = "tags")
+    @JsonIgnoreProperties("tags")
+    @MapsId("tag_id")
+    private Set<Post> posts;
 
     private String name;
 
@@ -37,12 +42,17 @@ public class Tag {
         this.name = name;
     }
 
-    public Post getPost() {
-        return post;
+    public Set<Post> getPosts() {
+        return posts;
     }
 
-    public void setPost(Post post) {
-        this.post = post;
+    public void setPost(Set<Post> post) {
+        this.posts = post;
+    }
+
+    public void addPost(Post post)
+    {
+        posts.add(post);
     }
 
     @Override
