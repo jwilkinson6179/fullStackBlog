@@ -1,9 +1,11 @@
 package com.zipcode.fullstackblog.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
@@ -19,16 +21,20 @@ public class Post
     private String author;
     private String text;
     private String imageUrl;
-    @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
-    private Date createTimestamp;
-    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime createTimestamp;
     @UpdateTimestamp
-    private Date updateTimestamp;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "posts", targetEntity = Tag.class)
+    private LocalDateTime updateTimestamp;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "tagged_posts",
+            joinColumns = {@JoinColumn(name = "post_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "tag_id", referencedColumnName = "id")})
+    @JsonIgnoreProperties("posts")
     private Set<Tag> tags;
 
-    public Post(){}
+    public Post()
+    {
+    }
 
     public Post(String header, String author, String text, String imageUrl)
     {
@@ -36,14 +42,9 @@ public class Post
         this.author = author;
         this.text = text;
         this.imageUrl = imageUrl;
-        this.createTimestamp = new Date();
+        this.createTimestamp = LocalDateTime.now();
         this.updateTimestamp = null;
         this.tags = new HashSet<>();
-    }
-
-    public void addTag(Tag tag)
-    {
-        this.tags.add(tag);
     }
 
     public void editPost(Post newPost)
@@ -103,20 +104,19 @@ public class Post
         this.imageUrl = imageUrl;
     }
 
-
-    public Date getCreateTimestamp() {
+    public LocalDateTime getCreateTimestamp() {
         return createTimestamp;
     }
 
-    public void setCreateTimestamp(Date createTimestamp) {
+    public void setCreateTimestamp(LocalDateTime createTimestamp) {
         this.createTimestamp = createTimestamp;
     }
 
-    public Date getUpdateTimestamp() {
+    public LocalDateTime getUpdateTimestamp() {
         return updateTimestamp;
     }
 
-    public void setUpdateTimestamp(Date updateTimestamp) {
+    public void setUpdateTimestamp(LocalDateTime updateTimestamp) {
         this.updateTimestamp = updateTimestamp;
     }
 
@@ -126,6 +126,11 @@ public class Post
 
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
+    }
+
+    public void addTag(Tag tag)
+    {
+        this.tags.add(tag);
     }
 
     @Override
