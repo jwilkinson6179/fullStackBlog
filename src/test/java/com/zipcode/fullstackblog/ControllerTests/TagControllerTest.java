@@ -81,7 +81,7 @@ public class TagControllerTest {
         BDDMockito
                 .given(service.save(tag))
                 .willReturn(tag);
-
+        tag.addPost(new Post());
         String expectedContent = "{\"id\":null,\"name\":\"Hello\"}";
         this.mockMvc.perform(MockMvcRequestBuilders
                 .post("/tags")

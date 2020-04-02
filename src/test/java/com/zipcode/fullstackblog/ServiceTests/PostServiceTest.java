@@ -1,7 +1,10 @@
 package com.zipcode.fullstackblog.ServiceTests;
 
+import com.zipcode.fullstackblog.models.Post;
 import com.zipcode.fullstackblog.models.Tag;
+import com.zipcode.fullstackblog.repositories.PostRepository;
 import com.zipcode.fullstackblog.repositories.TagRepository;
+import com.zipcode.fullstackblog.services.PostService;
 import com.zipcode.fullstackblog.services.TagService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -13,8 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -23,28 +24,28 @@ import static org.mockito.Mockito.doReturn;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class TagServiceTest {
+public class PostServiceTest {
 
     @Autowired
-    private TagService tagService;
+    private PostService postService;
 
     @MockBean
-    private TagRepository tagRepository;
+    private PostRepository postRepository;
 
     @Test
     @DisplayName("Test findById Success")
     public void tetFindByIdSuccess() {
 
         // Set up mock object and repository
-        Tag mockTag = new Tag(1L, "Hello");
-        doReturn(Optional.of(mockTag)).when(tagRepository).findById(1L);
+        Post mockPost = new Post("header","auther","text","image");
+        doReturn(Optional.of(mockPost)).when(postRepository).findById(1L);
 
         // Execute call
-        Optional<Tag> returnTag = tagService.findById(1);
+        Optional<Post> returnTag = postService.findById(1);
 
         // Check assertions
         Assertions.assertTrue(returnTag.isPresent(), "No Tag was found when there should be");
-        Assertions.assertSame(returnTag.get(), mockTag, "Models dont match up");
+        Assertions.assertSame(returnTag.get(), mockPost, "Models dont match up");
     }
 
     @Test
@@ -52,10 +53,10 @@ public class TagServiceTest {
     public void tetFindByIdFail() {
 
         // Set up mock repository
-        doReturn(Optional.empty()).when(tagRepository).findById(1L);
+        doReturn(Optional.empty()).when(postRepository).findById(1L);
 
         //execute the service call
-        Optional<Tag> returnCar = tagService.findById(1L);
+        Optional<Post> returnCar = postService.findById(1L);
 
         // Check assertions
         Assertions.assertFalse(returnCar.isPresent(), "Tag was found, when it should't be");
@@ -63,12 +64,12 @@ public class TagServiceTest {
     @Test
     @DisplayName("Test save product")
     public void testSave(){
-        Tag mockTag = new Tag(1L,"Hello");
-        doReturn(mockTag).when(tagRepository).save(any());
+        Post mockPost = new Post("header","auther","text","image");
+        doReturn(mockPost).when(postRepository).save(any());
 
-        Tag returnTag = tagService.create(mockTag);
+        Post returnPost = postService.create(mockPost);
 
-        Assertions.assertNotNull(returnTag, "The saved product should not be null");
+        Assertions.assertNotNull(returnPost, "The saved product should not be null");
     }
 
 }

@@ -47,6 +47,8 @@ public class Post
         this.tags = new HashSet<>();
     }
 
+
+
     public void editPost(Post newPost)
     {
         this.imageUrl = newPost.getImageUrl();
