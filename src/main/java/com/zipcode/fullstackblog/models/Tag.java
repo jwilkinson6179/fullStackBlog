@@ -10,8 +10,8 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private Post post;
+    @ManyToMany
+    private Set<Post> posts;
 
     private String name;
 
@@ -37,12 +37,12 @@ public class Tag {
         this.name = name;
     }
 
-    public Post getPost() {
-        return post;
+    public Set<Post> getPosts() {
+        return posts;
     }
 
-    public void setPost(Post post) {
-        this.post = post;
+    public void setPost(Set<Post> post) {
+        this.posts = post;
     }
 
     @Override

@@ -21,7 +21,6 @@ public class PostService
 
     public Post create(Post post)
     {
-        post.setCreateTimestamp(new Date());
         return this.repo.save(post);
     }
 
@@ -44,7 +43,6 @@ public class PostService
                     post.setAuthor(newPost.getAuthor());
                     post.setText(newPost.getText());
                     post.setImageUrl(newPost.getImageUrl());
-                    post.setUpdateTimestamp(new Date());
                     post.setTags(newPost.getTags());
                     return repo.save(post);
                 })

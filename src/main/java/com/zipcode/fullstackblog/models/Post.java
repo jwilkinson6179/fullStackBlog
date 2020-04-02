@@ -4,8 +4,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
@@ -22,10 +20,12 @@ public class Post
     private String text;
     private String imageUrl;
     @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
     private Date createTimestamp;
     @Temporal(TemporalType.TIMESTAMP)
+    @UpdateTimestamp
     private Date updateTimestamp;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "post", targetEntity = Tag.class)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "posts", targetEntity = Tag.class)
     private Set<Tag> tags;
 
     public Post(){}
