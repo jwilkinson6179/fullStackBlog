@@ -69,7 +69,6 @@ public class PostController
         return new ResponseEntity<>(post, HttpStatus.OK);
     }
 
-
     @DeleteMapping("/posts/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id)
     {
