@@ -78,7 +78,6 @@ public class TagControllerTest {
     @Test
     public void testPostTag() throws Exception {
         Tag tag = new Tag("Hello");
-        tag.setPost(new Post());
         BDDMockito
                 .given(service.save(tag))
                 .willReturn(tag);
