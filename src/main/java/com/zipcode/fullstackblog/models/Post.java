@@ -1,6 +1,7 @@
 package com.zipcode.fullstackblog.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
+import com.zipcode.fullstackblog.controllers.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -15,8 +16,10 @@ public class Post
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("allPosts")
     private Board board;
+
     private String header;
     private String author;
     private String text;
@@ -66,10 +69,6 @@ public class Post
 
     public Board getBoard() {
         return board;
-    }
-
-    public void setBoard(Board board) {
-        this.board = board;
     }
 
     public String getHeader() {
@@ -125,7 +124,25 @@ public class Post
     }
 
     public void setTags(Set<Tag> tags) {
+        for (Tag tag : tags) {
+            for (Tag t : TagController.getServ().findAll()) {
+                if (t.getName().equals(tag.getName())) {
+                    tag = t;
+                }
+            }
+        }
         this.tags = tags;
+    }
+
+    public void setBoard(Board board) {
+        boolean found = false;
+        for (Board b : BoardController.getServ().findAll()) {
+            if (b.getTitle().equals(board.getTitle())) {
+                this.board = b;
+                return;
+            }
+        }
+        this.board = board;
     }
 
     public void addTag(Tag tag)

@@ -22,6 +22,10 @@ public class BoardController {
         serv = ser;
     }
 
+    public static BoardService getServ() {
+        return serv;
+    }
+
     @GetMapping("/boards")
     public static Page<Board> getAllBoards(Pageable pageable)
     {
