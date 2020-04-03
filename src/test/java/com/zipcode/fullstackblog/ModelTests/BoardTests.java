@@ -71,7 +71,28 @@ public class BoardTests {
 
         Assert.assertEquals(board.size(),(Integer) 3);
     }
+    @Test
+    public void editPostTrue() {
+        Board board = new Board("Hello");
 
+        Post post1 = new Post("header", "author", "text", "img");
+        Post post2 = new Post("header", "author", "text", "img");
 
+        board.addPost(post1);
+
+        Assert.assertTrue( board.editPost(post1,post2));
+
+    }
+    @Test
+    public void editPostFalse() {
+        Board board = new Board("Hello");
+
+        Post post1 = new Post("header", "author", "text", "img");
+        Post post2 = new Post("header", "author", "text", "img");
+        post1.setId(1L);
+
+        Assert.assertFalse( board.editPost(1L,post2));
+
+    }
 
 }
