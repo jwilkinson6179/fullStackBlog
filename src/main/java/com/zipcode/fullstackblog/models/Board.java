@@ -1,5 +1,8 @@
 package com.zipcode.fullstackblog.models;
 
+import com.fasterxml.jackson.annotation.*;
+import com.zipcode.fullstackblog.controllers.*;
+
 import javax.persistence.*;
 import java.util.*;
 
@@ -11,6 +14,7 @@ public class Board {
     private Long id;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "board", targetEntity = Post.class)
+    @JsonIgnoreProperties("board")
     private List<Post> posts;
 
     private String title;
@@ -111,6 +115,13 @@ public class Board {
     }
 
     public void setPosts(List<Post> posts) {
+        for (Post post : posts) {
+            for (Post repoPost : PostController.getServ().findAll()) {
+                if (repoPost.getId().equals(post.getId())) {
+                    post = repoPost;
+                }
+            }
+        }
         this.posts = posts;
     }
 

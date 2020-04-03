@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "LoopyBlog"
+    }
+  },
+  "defaultProject": "LoopyBlog",
+  "cli": {
+    "analytics": "70da54e6-e922-4d7c-abe0-489db82531ef"
+  }
 }
