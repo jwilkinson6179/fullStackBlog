@@ -59,7 +59,7 @@ public class TagControllerTest {
 //
 //                .andExpect(status().isCreated())
 //                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-//
+//.
 //                .andExpect(header().string(HttpHeaders.LOCATION, "/tags/1"))
 //
 //                .andExpect(jsonPath("$.id", is(1)))
