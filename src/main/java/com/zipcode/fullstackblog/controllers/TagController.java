@@ -23,6 +23,10 @@ public class TagController {
         serv = ser;
     }
 
+    public static TagService getServ() {
+        return serv;
+    }
+
     @GetMapping("/tags")
     public static Page<Tag> getAllTags(Pageable pageable)
     {

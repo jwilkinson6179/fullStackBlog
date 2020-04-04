@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 public class PostController
@@ -24,11 +24,18 @@ public class PostController
         serv = ser;
     }
 
+    public static PostService getServ() {
+        return serv;
+    }
+
     @GetMapping("/posts")
     public static Page<Post> getAllPosts(Pageable pageable)
     {
         return serv.findAll(pageable);
     }
+
+    @GetMapping("/posts/list")
+    public static Collection<Post> getAllPosts() { return serv.findAll(); }
 
     @GetMapping("/posts/authors/{author}")
     public static Page<Post> getAllPosts(Pageable pageable, @PathVariable String author)
@@ -43,6 +50,7 @@ public class PostController
     }
 
     @GetMapping("/posts/{id}")
+    @CrossOrigin(origins = "http://secure-basin-65461.herokuapp.com")
     public static ResponseEntity<?> getPost(@PathVariable Long id)
     {
         Optional<Post> p = serv.findById(id);

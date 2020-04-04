@@ -19,9 +19,9 @@ public class BoardService {
         this.repo = repo;
     }
 
-    public Board create(Board board) {
+    public Board create(Board board) { return this.repo.save(board); }
 
-        return this.repo.save(board); }
+    public List<Board> findAll() { return this.repo.findAll(); }
 
     public Page<Board> findAll(Pageable pageable) {
         return repo.findAll(pageable); }

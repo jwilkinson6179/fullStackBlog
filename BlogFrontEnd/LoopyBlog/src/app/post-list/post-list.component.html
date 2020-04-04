@@ -1,0 +1,18 @@
+<mat-card>
+  <mat-card-header>Posts</mat-card-header>
+  <mat-card-content>
+    <mat-list dense>
+      <mat-list-item *ngFor="let post of posts">
+        <h3 mat-line>Post #{{post.id}}: {{post.header}}</h3>
+            <h3 mat-line><br></h3>
+        <h3 mat-line>{{post.text}}</h3>
+            <h3 mat-line><br></h3>
+        <h3 mat-line>{{post.author}} @ {{post.createTimestamp}}</h3>
+        <a mat-button [routerLink]="['/post-edit', post.id]">Edit</a>
+        <a mat-button [routerLink]="['/post-delete', post.id]">Delete</a>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+
+  <button mat-fab color="primary" [routerLink]="['/post-add']">Submit</button>
+</mat-card>

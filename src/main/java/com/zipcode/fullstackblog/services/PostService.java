@@ -1,16 +1,14 @@
 package com.zipcode.fullstackblog.services;
 
-import com.zipcode.fullstackblog.models.Post;
-import com.zipcode.fullstackblog.models.Tag;
+import com.zipcode.fullstackblog.controllers.*;
+import com.zipcode.fullstackblog.models.*;
 import com.zipcode.fullstackblog.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 
 @Service
@@ -21,12 +19,31 @@ public class PostService
     @Autowired
     public PostService(PostRepository repo) { this.repo = repo; }
 
-    public Post create(Post newPost)
+    public Post create(Post post)
     {
-        return this.repo.save(newPost);
+        boolean found = false;
+        if (post.getBoard() != null) {
+            for (Board b : BoardController.getServ().findAll()) {
+                if (b.getTitle().equals(post.getBoard().getTitle())) {
+                    post.setBoard(b);
+                    found = true;
+                    break;
+                }
+            }
+        }
+        if (!found) {
+            if (post.getBoard() == null) {
+                BoardController.getServ().create(new Board("General"));
+            } else {
+                BoardController.getServ().create(post.getBoard());
+            }
+        }
+        return this.repo.save(post);
     }
 
     public Page<Post> findAll(Pageable pageable) { return repo.findAll(pageable); }
+
+    public Collection<Post> findAll() { return repo.findAll(); }
 
     public Optional<Post> findById(long postId) { return this.repo.findById(postId); }
 
@@ -37,7 +54,7 @@ public class PostService
 
     public Post update(Post newPost, Long postId)
     {
-        Post updatedPost = repo.findById(postId)
+        return repo.findById(postId)
                 .map(post ->
                 {
                     post.setBoard(newPost.getBoard());
@@ -46,21 +63,9 @@ public class PostService
                     post.setText(newPost.getText());
                     post.setImageUrl(newPost.getImageUrl());
                     post.setTags(newPost.getTags());
-//                    Set<Tag> tagsForPost = newPost.getTags();
-//                    System.out.println(tagsForPost);
-//                    for(Tag tags : tagsForPost)
-//                    {
-//                        post.addTag(tags);
-//                    }
                     return repo.save(post);
                 })
-                .orElseGet(() ->
-                {
-//                    newPost.setCreateTimestamp(new Date());
-                    return repo.save(newPost);
-                });
-
-        return updatedPost;
+                .orElseGet(() -> repo.save(newPost));
     }
 
     public Boolean delete(long postId)
