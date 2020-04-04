@@ -41,6 +41,7 @@ public class BoardController {
 
     @Valid
     @PostMapping("/boards")
+    @CrossOrigin(origins = "http://loopyblog.herokuapp.com")
     public ResponseEntity<?> save(@RequestBody Board board)
     {
         board = serv.create(board);
@@ -54,6 +55,7 @@ public class BoardController {
     }
 
     @PutMapping("/boards/{id}")
+    @CrossOrigin(origins = "http://loopyblog.herokuapp.com")
     public ResponseEntity<?> editBoard(@RequestBody Board post, @PathVariable Long id)
     {
         serv.create(post);
@@ -62,6 +64,7 @@ public class BoardController {
 
 
     @DeleteMapping("/boards/{id}")
+    @CrossOrigin(origins = "http://loopyblog.herokuapp.com")
     public ResponseEntity<?> delete(@PathVariable Long id)
     {
         serv.delete(id);

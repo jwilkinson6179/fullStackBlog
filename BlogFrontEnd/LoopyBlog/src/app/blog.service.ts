@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -8,7 +8,7 @@ import {Observable} from 'rxjs';
 })
 export class PostService {
 
-  public API = '//localhost:8080/';
+  public API = 'http://loopyblog.herokuapp.com/';
 
   constructor(private http: HttpClient) { }
 

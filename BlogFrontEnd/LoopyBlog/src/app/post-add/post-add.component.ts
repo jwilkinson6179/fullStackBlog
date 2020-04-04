@@ -49,7 +49,6 @@ export class PostAddComponent implements OnInit, OnDestroy {
 
   save(form: NgForm) {
     this.postService.save(form).subscribe(result => {
-      console.log(result.name);
       this.gotoList();
     }, error => console.error(error));
   }
