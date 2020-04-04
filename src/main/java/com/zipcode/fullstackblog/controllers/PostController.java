@@ -34,7 +34,7 @@ public class PostController
     }
 
     @GetMapping("/posts/list")
-    public static List<Post> getAllPosts() { return serv.findAll(); }
+    public static Collection<Post> getAllPosts() { return serv.findAll(); }
 
     @GetMapping("/posts/authors/{author}")
     public static Page<Post> getAllPosts(Pageable pageable, @PathVariable String author)

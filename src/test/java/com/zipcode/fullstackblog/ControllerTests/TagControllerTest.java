@@ -35,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class TagControllerTest {
     @MockBean
-    private TagRepository service;
+    private TagService service;
 
     @Autowired
     private MockMvc mockMvc;
@@ -79,7 +79,7 @@ public class TagControllerTest {
     public void testPostTag() throws Exception {
         Tag tag = new Tag("Hello");
         BDDMockito
-                .given(service.save(tag))
+                .given(service.create(tag))
                 .willReturn(tag);
         tag.addPost(new Post());
         String expectedContent = "{\"id\":null,\"name\":\"Hello\"}";
