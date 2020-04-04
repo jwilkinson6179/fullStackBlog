@@ -21,9 +21,9 @@ public class PostService
     @Autowired
     public PostService(PostRepository repo) { this.repo = repo; }
 
-    public Post create(Post post)
+    public Post create(Post newPost)
     {
-        return this.repo.save(post);
+        return this.repo.save(newPost);
     }
 
     public Page<Post> findAll(Pageable pageable) { return repo.findAll(pageable); }

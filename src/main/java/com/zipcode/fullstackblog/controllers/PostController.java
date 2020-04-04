@@ -15,6 +15,7 @@ import java.util.Optional;
 @RestController
 public class PostController
 {
+    @Autowired
     private static PostService serv;
 
     @Autowired
@@ -61,6 +62,8 @@ public class PostController
 
         return new ResponseEntity<>(newPostUri, HttpStatus.CREATED);
     }
+
+
 
     @PutMapping("/posts/{id}")
     public ResponseEntity<?> editPost(@RequestBody Post post, @PathVariable Long id)
