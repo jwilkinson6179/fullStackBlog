@@ -23,8 +23,15 @@ public class BoardController {
     }
 
     public static BoardService getServ() {
+
+
+
         return serv;
     }
+
+    @GetMapping("/posts/list")
+    @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})
+    public static Collection<Board> getAllBoards() { return serv.findAll(); }
 
     @GetMapping("/boards")
     public static Page<Board> getAllBoards(Pageable pageable)

@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GiphyService } from '../shared/giphy.service';
+import { GiphyService } from '../../services/giphy.service';
 import { NgForm } from '@angular/forms';
-import { PostService } from '../blog.service';
+import { PostService } from '../../services/post/post.service';
 
 @Component({
   selector: 'app-post-add',

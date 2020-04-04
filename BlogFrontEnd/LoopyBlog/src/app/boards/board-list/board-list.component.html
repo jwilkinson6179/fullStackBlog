@@ -1,0 +1,15 @@
+<mat-card>
+  <mat-card-header>Boards</mat-card-header>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item *ngFor="let board of boards">
+        <a mat-button [routerLink]="['/board-view', board.id]">{{board.title}}</a>
+        <a mat-button [routerLink]="['/board-edit', board.id]">Edit</a>
+        <a mat-button [routerLink]="['/board-delete', board.id]">Delete</a>
+        <h3 mat-line><br></h3>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+
+  <button mat-fab color="primary" [routerLink]="['/board-add']">Submit</button>
+</mat-card>

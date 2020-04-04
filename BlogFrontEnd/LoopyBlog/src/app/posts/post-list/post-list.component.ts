@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {PostService} from '../blog.service';
-import { GiphyService } from '../shared/giphy.service';
+import {PostService} from '../../services/post/post.service';
 
 @Component({
   selector: 'app-post-list',
@@ -11,14 +10,11 @@ export class PostListComponent implements OnInit {
 
   posts: Array<any>;
 
-  constructor(private postService: PostService, private giphyService: GiphyService) { }
+  constructor(private postService: PostService) { }
 
   ngOnInit() {
     this.postService.getPosts().subscribe(data => {
       this.posts = data;
-      for (const post of this.posts) {
-       /* this.giphyService.get(post.id).subscribe(url => post.imageUrl = url);*/
-      }
     });
   }
 
