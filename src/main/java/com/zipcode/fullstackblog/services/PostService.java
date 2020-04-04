@@ -35,6 +35,7 @@ public class PostService
             if (post.getBoard() == null) {
                 BoardController.getServ().create(new Board("General"));
             } else {
+                System.out.println(post.getBoard().getTitle());
                 BoardController.getServ().create(post.getBoard());
             }
         }
