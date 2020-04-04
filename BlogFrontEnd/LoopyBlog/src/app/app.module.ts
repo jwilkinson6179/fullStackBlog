@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { PostService } from './blog.service';
 import { PostListComponent } from './post-list/post-list.component';
 import { PostSubmitComponent } from './post-submit/post-submit.component';
-import { MatButtonModule, MatCardModule, MatInputModule, MatListModule, MatToolbarModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatInputModule, MatListModule, MatToolbarModule, MatFormFieldModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GiphyService } from './shared/giphy.service';
 import { FormsModule } from '@angular/forms';
@@ -58,6 +58,7 @@ const appRoutes: Routes = [
     MatListModule,
     MatToolbarModule,
     FormsModule,
+    MatFormFieldModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [PostService, GiphyService],

@@ -29,7 +29,7 @@ export class PostAddComponent implements OnInit, OnDestroy {
           if (post) {
             this.post = post;
             this.post.href = post._links.self.href;
-            this.giphyService.get(post.name).subscribe(url => post.imageUrl = url);
+           /* this.giphyService.get(post.name).subscribe(url => post.imageUrl = url);*/
           } else {
             console.log(`Post with id '${id}' not found, returning to list`);
             this.gotoList();
@@ -49,6 +49,7 @@ export class PostAddComponent implements OnInit, OnDestroy {
 
   save(form: NgForm) {
     this.postService.save(form).subscribe(result => {
+      console.log(result.name);
       this.gotoList();
     }, error => console.error(error));
   }
