@@ -43,7 +43,7 @@ public class PostService
 
     public Page<Post> findAll(Pageable pageable) { return repo.findAll(pageable); }
 
-    public List<Post> findAll() { return repo.findAll(); }
+    public Collection<Post> findAll() { return repo.findAll(); }
 
     public Optional<Post> findById(long postId) { return this.repo.findById(postId); }
 

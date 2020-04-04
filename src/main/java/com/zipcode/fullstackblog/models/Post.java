@@ -46,8 +46,21 @@ public class Post
         this.text = text;
         this.imageUrl = imageUrl;
         this.createTimestamp = LocalDateTime.now();
-        this.updateTimestamp = null;
         this.tags = new HashSet<>();
+        this.board = new Board();
+    }
+
+    public Post(String header, String author, String text, String imageUrl, boolean timestamp)
+    {
+        this.header = header;
+        this.author = author;
+        this.text = text;
+        this.imageUrl = imageUrl;
+        if (timestamp) {
+            this.createTimestamp = LocalDateTime.now();
+        }
+        this.tags = new HashSet<>();
+        this.board = new Board();
     }
 
     public void editPost(Post newPost)

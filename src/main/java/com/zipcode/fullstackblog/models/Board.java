@@ -19,7 +19,9 @@ public class Board {
 
     private String title;
 
-    public Board() {}
+    public Board() {
+        this.posts = new ArrayList<>();
+    }
 
     public Board(String title) {
         this.title = title;
