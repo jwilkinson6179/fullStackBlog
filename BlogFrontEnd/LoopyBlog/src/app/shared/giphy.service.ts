@@ -11,7 +11,7 @@ export class GiphyService {
   constructor(public http: HttpClient) {
   }
 
-  get(searchTerm) {
+  /*get(searchTerm) {
     const apiLink = this.giphyApi + searchTerm;
     return this.http.get(apiLink).map((response: any) => {
       if (response.data.length > 0) {
@@ -20,5 +20,5 @@ export class GiphyService {
         return 'https://media.giphy.com/media/YaOxRsmrv9IeA/giphy.gif'; // dancing cat for 404
       }
     });
-  }
+  }*/
 }

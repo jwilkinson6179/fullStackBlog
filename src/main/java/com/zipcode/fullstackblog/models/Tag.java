@@ -14,7 +14,7 @@ public class Tag {
     private Long id;
 
     @ManyToMany(mappedBy = "tags")
-    @JsonIgnoreProperties("tags")
+    @JsonIgnoreProperties("posts")
     @MapsId("tag_id")
     private Set<Post> posts;
 

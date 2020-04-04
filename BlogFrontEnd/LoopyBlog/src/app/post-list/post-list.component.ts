@@ -17,7 +17,7 @@ export class PostListComponent implements OnInit {
     this.postService.getPosts().subscribe(data => {
       this.posts = data;
       for (const post of this.posts) {
-        this.giphyService.get(post.id).subscribe(url => post.imageUrl = url);
+       /* this.giphyService.get(post.id).subscribe(url => post.imageUrl = url);*/
       }
     });
   }

@@ -17,7 +17,7 @@ public class Post
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JsonIgnoreProperties("allPosts")
+    @JsonIgnoreProperties({"allPosts", "posts"})
     private Board board;
 
     private String header;

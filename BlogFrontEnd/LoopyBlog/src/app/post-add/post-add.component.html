@@ -8,19 +8,16 @@
       <mat-form-field appearance="fill">
         <mat-label>Header</mat-label>
         <input matInput placeholder="Title" [(ngModel)]="post.header"
-               required name="name" #header>
+               required name="header" #header>
       </mat-form-field>
       <br>
       <mat-form-field>
         <input matInput placeholder="Author" [(ngModel)]="post.author"
-               required name="name" #name>
+               required name="author" #author>
       </mat-form-field>
       <br>
       <mat-form-field appearance="fill">
-        <label>
-          Text
-          <textarea [(ngModel)]="post.text"></textarea>
-        </label>
+          <textarea matInput placeholder="Text" [(ngModel)]="post.text" required name="text" #text></textarea>
       </mat-form-field>
     </mat-card-content>
     <mat-card-actions>
