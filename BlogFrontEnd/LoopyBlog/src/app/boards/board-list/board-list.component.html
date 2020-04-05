@@ -3,7 +3,9 @@
   <mat-card-content>
     <mat-list>
       <mat-list-item *ngFor="let board of boards">
-        <a mat-button [routerLink]="['/board-view', board.id]">{{board.title}}</a>
+        <div style="width: 100%; text-align: left;">
+          <button mat-raised-button color="primary" [routerLink]="['/board-view', board.id]">{{board.title}}</button>
+        </div>
         <a mat-button [routerLink]="['/board-edit', board.id]">Edit</a>
         <a mat-button [routerLink]="['/board-delete', board.id]">Delete</a>
         <h3 mat-line><br></h3>

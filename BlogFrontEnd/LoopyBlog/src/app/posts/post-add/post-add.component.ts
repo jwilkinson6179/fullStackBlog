@@ -44,7 +44,7 @@ export class PostAddComponent implements OnInit, OnDestroy {
   }
 
   gotoList() {
-    this.router.navigate(['/post-list']);
+    this.router.navigate(['/board-list']);
   }
 
   save(form: NgForm) {

@@ -8,12 +8,17 @@ import { Observable } from 'rxjs';
 })
 export class BoardService {
 
-  public API = 'http://loopyblog.herokuapp.com/';
+  // public API = 'http://loopyblog.herokuapp.com/';
+  public API = 'http://localhost:8080/';
 
   constructor(private http: HttpClient) { }
 
   getPosts(): Observable<any> {
     return this.http.get(this.API + 'boards/list');
+  }
+
+  getPostsFromBoard(id: number): Observable<any> {
+    return this.http.get(this.API + 'boards/posts/' + id);
   }
 
   get(id: number) {
