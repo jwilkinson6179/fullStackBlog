@@ -26,6 +26,23 @@ public class BoardController {
         return serv;
     }
 
+    @GetMapping("/boards/list")
+    @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})
+    public static Collection<Board> getAllBoards() { return serv.findAll(); }
+
+    @GetMapping("/boards/posts/{id}")
+    @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})
+    public static Collection<Post> getAllPosts(@PathVariable Long id) {
+        Optional<Board> p = serv.findById(id);
+        if (p.isPresent()) {
+            Board board = p.get();
+            return board.getPosts();
+        }else {
+            return new ArrayList<>();
+        }
+    }
+
+
     @GetMapping("/boards")
     public static Page<Board> getAllBoards(Pageable pageable)
     {
