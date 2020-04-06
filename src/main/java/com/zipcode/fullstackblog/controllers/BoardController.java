@@ -26,6 +26,23 @@ public class BoardController {
         return serv;
     }
 
+    @GetMapping("/boards/list")
+    @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})
+    public static Collection<Board> getAllBoards() { return serv.findAll(); }
+
+    @GetMapping("/boards/posts/{id}")
+    @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})
+    public static Collection<Post> getAllPosts(@PathVariable Long id) {
+        Optional<Board> p = serv.findById(id);
+        if (p.isPresent()) {
+            Board board = p.get();
+            return board.getPosts();
+        }else {
+            return new ArrayList<>();
+        }
+    }
+
+
     @GetMapping("/boards")
     public static Page<Board> getAllBoards(Pageable pageable)
     {
@@ -39,8 +56,16 @@ public class BoardController {
         return (p.isPresent()) ? new ResponseEntity<> (p, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping("/boards/actual/{id}")
+    public static Board getABoard(@PathVariable Long id)
+    {
+        Optional<Board> p = serv.findById(id);
+        return p.orElse(null);
+    }
+
     @Valid
     @PostMapping("/boards")
+    @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})
     public ResponseEntity<?> save(@RequestBody Board board)
     {
         board = serv.create(board);
@@ -54,6 +79,7 @@ public class BoardController {
     }
 
     @PutMapping("/boards/{id}")
+    @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})
     public ResponseEntity<?> editBoard(@RequestBody Board post, @PathVariable Long id)
     {
         serv.create(post);
@@ -62,6 +88,7 @@ public class BoardController {
 
 
     @DeleteMapping("/boards/{id}")
+    @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})
     public ResponseEntity<?> delete(@PathVariable Long id)
     {
         serv.delete(id);

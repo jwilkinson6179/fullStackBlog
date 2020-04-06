@@ -35,6 +35,7 @@ public class PostController
     }
 
     @GetMapping("/posts/list")
+    @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})
     public static Collection<Post> getAllPosts() { return serv.findAll(); }
 
     @GetMapping("/posts/authors/{author}")
@@ -50,7 +51,7 @@ public class PostController
     }
 
     @GetMapping("/posts/{id}")
-    @CrossOrigin(origins = "http://secure-basin-65461.herokuapp.com")
+    @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})
     public static ResponseEntity<?> getPost(@PathVariable Long id)
     {
         Optional<Post> p = serv.findById(id);
@@ -59,6 +60,7 @@ public class PostController
 
     @Valid
     @PostMapping("/posts")
+    @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})
     public ResponseEntity<?> save(@RequestBody Post post)
     {
         post = serv.create(post);
@@ -74,6 +76,7 @@ public class PostController
 
 
     @PutMapping("/posts/{id}")
+    @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})
     public ResponseEntity<?> editPost(@RequestBody Post post, @PathVariable Long id)
     {
         serv.update(post, id);
@@ -81,6 +84,7 @@ public class PostController
     }
 
     @DeleteMapping("/posts/{id}")
+    @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})
     public ResponseEntity<?> delete(@PathVariable Long id)
     {
         serv.delete(id);

@@ -44,10 +44,6 @@ public class Board {
         return this.posts.size();
     }
 
-    public List<Post> getAllPosts() {
-        return posts;
-    }
-
     public ArrayList<Post> getPosts(Tag tag) {
         ArrayList<Post> output = new ArrayList<>();
         for (Post post : posts) {
@@ -145,12 +141,12 @@ public class Board {
         if (this == o) return true;
         if (!(o instanceof Board)) return false;
         Board board = (Board) o;
-        return Objects.equals(getId(), board.getId());
+        return Objects.equals(getTitle(), board.getTitle());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        return Objects.hash(getTitle());
     }
 }
 
