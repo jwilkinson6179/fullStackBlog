@@ -56,6 +56,13 @@ public class BoardController {
         return (p.isPresent()) ? new ResponseEntity<> (p, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping("/boards/actual/{id}")
+    public static Board getABoard(@PathVariable Long id)
+    {
+        Optional<Board> p = serv.findById(id);
+        return p.orElse(null);
+    }
+
     @Valid
     @PostMapping("/boards")
     @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})

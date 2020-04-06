@@ -21,7 +21,7 @@ export class AppComponent  implements OnInit
     this.postService.getPosts().subscribe((postData) => {
       this.postData = postData;
     });
-    this.boardService.getPosts().subscribe((boardData) => {
+    this.boardService.getBoards().subscribe((boardData) => {
       this.boardData = boardData;
     });
   }

@@ -13,7 +13,7 @@ export class BoardService {
 
   constructor(private http: HttpClient) { }
 
-  getPosts(): Observable<any> {
+  getBoards(): Observable<any> {
     return this.http.get(this.API + 'boards/list');
   }
 

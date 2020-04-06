@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class PostService {
 
-  public API = 'http://loopyblog.herokuapp.com/';
+  public API = 'http://localhost:8080/';
 
   constructor(private http: HttpClient) { }
 
@@ -20,7 +20,14 @@ export class PostService {
     return this.http.get(this.API + 'posts/' + id);
   }
 
-  save(post: any): Observable<any> {
+  getBoard(id: number) {
+    return this.http.get('http://localhost:8080/boards/actual/' + id);
+  }
+
+  save(post: any, id: number): Observable<any> {
+    console.log('SELECTED ID: ' + id);
+    post.board = this.getBoard(id);
+    console.log('POST BOARD: ' + post.board.title);
     let result: Observable<any>;
     if (post.href) {
       result = this.http.put(post.href, post);

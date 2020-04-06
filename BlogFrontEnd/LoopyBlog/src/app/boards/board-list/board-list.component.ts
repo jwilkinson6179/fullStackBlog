@@ -13,7 +13,7 @@ export class BoardListComponent implements OnInit {
   constructor(private boardService: BoardService) { }
 
   ngOnInit() {
-    this.boardService.getPosts().subscribe(data => {
+    this.boardService.getBoards().subscribe(data => {
       this.boards = data;
     });
   }

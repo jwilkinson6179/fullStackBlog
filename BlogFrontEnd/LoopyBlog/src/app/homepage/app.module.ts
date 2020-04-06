@@ -9,7 +9,7 @@ import { PostListComponent } from '../posts/post-list/post-list.component';
 import { MatButtonModule, MatCardModule, MatInputModule, MatListModule, MatToolbarModule, MatFormFieldModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GiphyService } from '../services/giphy.service';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { PostEditComponent } from '../posts/post-edit/post-edit.component';
 import { PostAddComponent } from '../posts/post-add/post-add.component';
@@ -19,6 +19,7 @@ import { BoardDeleteComponent } from '../boards/board-delete/board-delete.compon
 import { BoardEditComponent } from '../boards/board-edit/board-edit.component';
 import { BoardListComponent } from '../boards/board-list/board-list.component';
 import { BoardViewComponent } from '../boards/board-view/board-view.component';
+import {MatSelectModule} from "@angular/material/select";
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/board-list', pathMatch: 'full' },
@@ -85,7 +86,9 @@ const appRoutes: Routes = [
     MatToolbarModule,
     FormsModule,
     MatFormFieldModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    MatSelectModule,
+    ReactiveFormsModule
   ],
   providers: [PostService, GiphyService],
   bootstrap: [AppComponent]
