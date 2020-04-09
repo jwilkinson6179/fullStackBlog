@@ -30,6 +30,14 @@ export class PostService {
     return result;
   }
 
+  edit(post: any): Observable<any> {
+    let result: Observable<any>;
+    if (post.href) {
+      result = this.http.put(post.href, post);
+    }
+    return result;
+  }
+
   remove(href: string) {
     return this.http.delete(href);
   }
