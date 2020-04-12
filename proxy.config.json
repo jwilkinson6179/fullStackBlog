@@ -1,6 +1,6 @@
 {
-  "/*": {
-    "target": "http://localhost:8080",
+  "/api": {
+    "target": "https://loopyblog.herokuapp.com/",
     "secure": "false",
     "logLevel": "debug"
   }
