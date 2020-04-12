@@ -1,7 +1,7 @@
 {
   "/api": {
     "target": "https://loopyblog.herokuapp.com/",
-    "secure": "false",
-    "logLevel": "debug"
+    "secure": false,
+    "changeOrigin": true
   }
 }
