@@ -10,11 +10,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 public class PostController
 {
+    @Autowired
     private static PostService serv;
 
     @Autowired
@@ -23,11 +24,19 @@ public class PostController
         serv = ser;
     }
 
+    public static PostService getServ() {
+        return serv;
+    }
+
     @GetMapping("/posts")
     public static Page<Post> getAllPosts(Pageable pageable)
     {
         return serv.findAll(pageable);
     }
+
+    @GetMapping("/posts/list")
+    @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})
+    public static Collection<Post> getAllPosts() { return serv.findAll(); }
 
     @GetMapping("/posts/authors/{author}")
     public static Page<Post> getAllPosts(Pageable pageable, @PathVariable String author)
@@ -42,6 +51,7 @@ public class PostController
     }
 
     @GetMapping("/posts/{id}")
+    @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})
     public static ResponseEntity<?> getPost(@PathVariable Long id)
     {
         Optional<Post> p = serv.findById(id);
@@ -50,6 +60,7 @@ public class PostController
 
     @Valid
     @PostMapping("/posts")
+    @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})
     public ResponseEntity<?> save(@RequestBody Post post)
     {
         post = serv.create(post);
@@ -62,7 +73,10 @@ public class PostController
         return new ResponseEntity<>(newPostUri, HttpStatus.CREATED);
     }
 
+
+
     @PutMapping("/posts/{id}")
+    @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})
     public ResponseEntity<?> editPost(@RequestBody Post post, @PathVariable Long id)
     {
         serv.update(post, id);
@@ -70,6 +84,7 @@ public class PostController
     }
 
     @DeleteMapping("/posts/{id}")
+    @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})
     public ResponseEntity<?> delete(@PathVariable Long id)
     {
         serv.delete(id);

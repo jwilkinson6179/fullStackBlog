@@ -1,7 +1,7 @@
 package com.zipcode.fullstackblog.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.JsonIgnore;
+import com.zipcode.fullstackblog.controllers.*;
 
 import javax.persistence.*;
 import java.util.*;
@@ -14,7 +14,7 @@ public class Tag {
     private Long id;
 
     @ManyToMany(mappedBy = "tags")
-    @JsonIgnoreProperties("tags")
+    @JsonIgnoreProperties("posts")
     @MapsId("tag_id")
     private Set<Post> posts;
 
@@ -55,8 +55,15 @@ public class Tag {
         return posts;
     }
 
-    public void setPost(Set<Post> post) {
-        this.posts = post;
+    public void setPost(Set<Post> posts) {
+        for (Post post : posts) {
+            for (Post repoPost : PostController.getServ().findAll()) {
+                if (repoPost.getId().equals(post.getId())) {
+                    post = repoPost;
+                }
+            }
+        }
+        this.posts = posts;
     }
 
     public void addPost(Post post)
@@ -70,17 +77,15 @@ public class Tag {
     }
 
     @Override
-    public boolean equals(Object o)
-    {
+    public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Tag)) return false;
         Tag tag = (Tag) o;
-        return Objects.equals(name, tag.name);
+        return Objects.equals(getName(), tag.getName());
     }
 
     @Override
-    public int hashCode()
-    {
-        return Objects.hash(name);
+    public int hashCode() {
+        return Objects.hash(getName());
     }
 }

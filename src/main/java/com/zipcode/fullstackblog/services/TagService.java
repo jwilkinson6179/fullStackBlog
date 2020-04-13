@@ -23,6 +23,8 @@ public class TagService {
 
     public Page<Tag> findAll(Pageable pageable) { return repo.findAll(pageable); }
 
+    public List<Tag> findAll() { return repo.findAll(); }
+
     public Optional<Tag> findById(long tagId) { return this.repo.findById(tagId); }
 
     public Boolean delete(long boardId)

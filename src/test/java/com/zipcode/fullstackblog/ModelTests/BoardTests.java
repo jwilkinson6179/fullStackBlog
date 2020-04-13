@@ -128,7 +128,7 @@ public class BoardTests {
         board.addPost(post1);
         board.addPost(post2);
 
-        Integer expected = board.getAllPosts().size();
+        Integer expected = board.getPosts().size();
         Integer actual = 2;
 
         Assert.assertEquals(expected,actual);

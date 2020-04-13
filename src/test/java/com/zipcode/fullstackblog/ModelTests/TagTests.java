@@ -42,6 +42,9 @@ public class TagTests {
         Post post1 = new Post("header","author","text","img");
         Post post2 = new Post("header","author","text","img");
         Post post3 = new Post("header","author","text","img");
+        post1.setId(1L);
+        post2.setId(2L);
+        post3.setId(3L);
 
         Set<Post> posts = new HashSet<>();
         tag.setPost(posts);

@@ -1,5 +1,8 @@
 package com.zipcode.fullstackblog.models;
 
+import com.fasterxml.jackson.annotation.*;
+import com.zipcode.fullstackblog.controllers.*;
+
 import javax.persistence.*;
 import java.util.*;
 
@@ -11,11 +14,14 @@ public class Board {
     private Long id;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "board", targetEntity = Post.class)
+    @JsonIgnoreProperties("board")
     private List<Post> posts;
 
     private String title;
 
-    public Board() {}
+    public Board() {
+        this.posts = new ArrayList<>();
+    }
 
     public Board(String title) {
         this.title = title;
@@ -36,10 +42,6 @@ public class Board {
 
     public Integer size() {
         return this.posts.size();
-    }
-
-    public List<Post> getAllPosts() {
-        return posts;
     }
 
     public ArrayList<Post> getPosts(Tag tag) {
@@ -111,6 +113,13 @@ public class Board {
     }
 
     public void setPosts(List<Post> posts) {
+        for (Post post : posts) {
+            for (Post repoPost : PostController.getServ().findAll()) {
+                if (repoPost.getId().equals(post.getId())) {
+                    post = repoPost;
+                }
+            }
+        }
         this.posts = posts;
     }
 
@@ -132,12 +141,12 @@ public class Board {
         if (this == o) return true;
         if (!(o instanceof Board)) return false;
         Board board = (Board) o;
-        return Objects.equals(getId(), board.getId());
+        return Objects.equals(getTitle(), board.getTitle());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        return Objects.hash(getTitle());
     }
 }
 
