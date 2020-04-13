@@ -13,6 +13,7 @@ import java.net.*;
 import java.util.*;
 
 @RestController
+@RequestMapping("/api")
 public class BoardController {
 
     private static BoardService serv;
