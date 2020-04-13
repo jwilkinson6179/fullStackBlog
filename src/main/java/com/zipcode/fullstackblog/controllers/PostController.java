@@ -73,9 +73,7 @@ public class PostController
 
         return new ResponseEntity<>(newPostUri, HttpStatus.CREATED);
     }
-
-
-
+    
     @PutMapping("/posts/{id}")
     @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})
     public ResponseEntity<?> editPost(@RequestBody Post post, @PathVariable Long id)
@@ -92,4 +90,3 @@ public class PostController
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
-//
