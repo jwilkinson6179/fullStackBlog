@@ -14,9 +14,7 @@ public class Post
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @ManyToOne(fetch = FetchType.EAGER)
+    private Long id;@ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnoreProperties({"allPosts", "posts"})
     private Board board;
 

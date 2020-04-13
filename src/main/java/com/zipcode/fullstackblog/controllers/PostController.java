@@ -13,6 +13,7 @@ import java.net.URI;
 import java.util.*;
 
 @RestController
+@RequestMapping("/api")
 public class PostController
 {
     @Autowired
@@ -72,9 +73,7 @@ public class PostController
 
         return new ResponseEntity<>(newPostUri, HttpStatus.CREATED);
     }
-
-
-
+    
     @PutMapping("/posts/{id}")
     @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})
     public ResponseEntity<?> editPost(@RequestBody Post post, @PathVariable Long id)
