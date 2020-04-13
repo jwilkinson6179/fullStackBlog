@@ -16,6 +16,7 @@ import java.util.*;
 @RequestMapping("/api")
 public class PostController
 {
+    @Autowired
     private static PostService serv;
 
     @Autowired
@@ -72,6 +73,8 @@ public class PostController
 
         return new ResponseEntity<>(newPostUri, HttpStatus.CREATED);
     }
+
+
 
     @PutMapping("/posts/{id}")
     @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})

@@ -5,8 +5,9 @@ import com.zipcode.fullstackblog.models.Post;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.lang.reflect.Array;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
+import java.util.List;
 
 public class BoardTests {
 
@@ -71,7 +72,86 @@ public class BoardTests {
 
         Assert.assertEquals(board.size(),(Integer) 3);
     }
+    @Test
+    public void editPostTrue() {
+        Board board = new Board("Hello");
 
+        Post post1 = new Post("header", "author", "text", "img");
+        Post post2 = new Post("header", "author", "text", "img");
 
+        board.addPost(post1);
+
+        Assert.assertTrue( board.editPost(post1,post2));
+
+    }
+    @Test
+    public void editPostFalse() {
+        Board board = new Board("Hello");
+
+        Post post1 = new Post("header", "author", "text", "img");
+        Post post2 = new Post("header", "author", "text", "img");
+        post1.setId(1L);
+
+        Assert.assertFalse( board.editPost(1L,post2));
+
+    }
+    @Test
+    public void idTest() {
+        Board board = new Board("Hello");
+        board.setId(23L);
+        Long expected = board.getId();
+        Long actual = 23L;
+        Assert.assertEquals(expected,actual);
+
+    }
+
+    @Test
+    public void titleTest() {
+        Board board = new Board();
+        board.setTitle("test");
+        String expected = board.getTitle();
+        String actual = "test";
+        Assert.assertEquals(expected,actual);
+
+    }
+
+    @Test
+    public void postsTest(){
+        Board board = new Board("Hello");
+
+        Post post1 = new Post("header", "author", "text", "img");
+        Post post2 = new Post("header", "author", "text", "img");
+
+        List<Post> posts = new ArrayList<>();
+        board.setPosts(posts);
+
+        board.addPost(post1);
+        board.addPost(post2);
+
+        Integer expected = board.getPosts().size();
+        Integer actual = 2;
+
+        Assert.assertEquals(expected,actual);
+
+    }
+
+    @Test
+    public void postsIdTest() {
+        Board board = new Board("Hello");
+
+        Post post1 = new Post("header", "author", "text", "img");
+        Post post2 = new Post("header", "author", "text", "img");
+
+        List<Post> posts = new ArrayList<>();
+        board.setPosts(posts);
+
+        board.addPost(post1);
+        board.addPost(post2);
+
+        Post test = board.getPost(0);
+
+        Assert.assertEquals(test,post1);
+
+    }
 
 }
