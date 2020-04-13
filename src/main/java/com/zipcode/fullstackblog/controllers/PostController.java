@@ -13,7 +13,7 @@ import java.net.URI;
 import java.util.*;
 
 @RestController
-@RequestMapping({"/api"})
+@RequestMapping("/api")
 public class PostController
 {
     private static PostService serv;

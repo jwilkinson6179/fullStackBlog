@@ -14,6 +14,7 @@ import java.net.*;
 import java.util.*;
 
 @RestController
+@RequestMapping("/api")
 public class TagController {
 
     private static TagService serv;

@@ -59,6 +59,7 @@ const appRoutes: Routes = [
     path: 'board-edit/:id',
     component: BoardEditComponent
   }
+  // TODO: ** NotFound route
 ];
 
 @NgModule({
@@ -87,6 +88,7 @@ const appRoutes: Routes = [
     FormsModule,
     MatFormFieldModule,
     RouterModule.forRoot(appRoutes),
+    // TODO: Should we enableTracing? forRoot(appRoutes, {enableTracing:true}),
     MatSelectModule,
     ReactiveFormsModule
   ],
