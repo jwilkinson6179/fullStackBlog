@@ -78,9 +78,9 @@ public class PostTest {
     public void tagsTest() {
         Post post = new Post("header", "author", "text", "img");
 
-        Tag tag1 = new Tag();
-        Tag tag2 = new Tag();
-        Tag tag3 = new Tag();
+        Tag tag1 = new Tag("test1");
+        Tag tag2 = new Tag("test2");
+        Tag tag3 = new Tag("test3");
 
         Set<Tag> tags = new HashSet<>();
         post.setTags(tags);

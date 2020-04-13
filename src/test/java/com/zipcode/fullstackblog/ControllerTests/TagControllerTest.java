@@ -4,6 +4,7 @@ import com.zipcode.fullstackblog.controllers.TagController;
 import com.zipcode.fullstackblog.models.Post;
 import com.zipcode.fullstackblog.models.Tag;
 import com.zipcode.fullstackblog.repositories.TagRepository;
+import com.zipcode.fullstackblog.services.TagService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.BDDMockito;
