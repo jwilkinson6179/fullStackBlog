@@ -3,7 +3,6 @@ package com.zipcode.fullstackblog.ControllerTests;
 
 import com.fasterxml.jackson.databind.*;
 import com.zipcode.fullstackblog.models.Post;
-import com.zipcode.fullstackblog.repositories.PostRepository;
 import com.zipcode.fullstackblog.services.*;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
