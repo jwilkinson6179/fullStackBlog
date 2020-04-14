@@ -16,13 +16,14 @@ import java.util.*;
 @RequestMapping("/api")
 public class PostController
 {
-    @Autowired
     private static PostService serv;
+    private static BoardService brdServ;
 
     @Autowired
-    public PostController(PostService ser)
+    public PostController(PostService ser, BoardService brdSer)
     {
         serv = ser;
+        brdServ = brdSer;
     }
 
     public static PostService getServ() {
@@ -64,6 +65,25 @@ public class PostController
     @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
     public ResponseEntity<?> save(@RequestBody Post post)
     {
+        post = serv.create(post);
+        URI newPostUri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(post.getId())
+                .toUri();
+
+        return new ResponseEntity<>(newPostUri, HttpStatus.CREATED);
+    }
+
+    @Valid
+    @PostMapping("/posts/{id}")
+    @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
+    public ResponseEntity<?> save(@RequestBody Post post, @PathVariable long id)
+    {
+        Optional<Board> foundBoard = brdServ.findById(id);
+        if (foundBoard.isPresent()) {
+            post.setBoard(foundBoard.get());
+        }
         post = serv.create(post);
         URI newPostUri = ServletUriComponentsBuilder
                 .fromCurrentRequest()

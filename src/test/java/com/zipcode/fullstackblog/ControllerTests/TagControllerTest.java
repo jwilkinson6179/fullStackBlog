@@ -1,9 +1,7 @@
 package com.zipcode.fullstackblog.ControllerTests;
 
 import com.zipcode.fullstackblog.controllers.TagController;
-import com.zipcode.fullstackblog.models.Post;
-import com.zipcode.fullstackblog.models.Tag;
-import com.zipcode.fullstackblog.repositories.TagRepository;
+import com.zipcode.fullstackblog.models.*;
 import com.zipcode.fullstackblog.services.TagService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,6 +16,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -36,13 +36,15 @@ public class TagControllerTest {
     @Test
     public void testPostTag() throws Exception {
         Tag tag = new Tag("Hello");
+        tag.setId(1L);
         BDDMockito
-                .given(service.create(tag))
-                .willReturn(tag);
+                .doReturn(tag)
+                .when(service)
+                .create(any());
         tag.addPost(new Post());
         String expectedContent = "{\"id\":null,\"name\":\"Hello\"}";
         this.mockMvc.perform(MockMvcRequestBuilders
-                .post("/tags")
+                .post("/api/tags")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(expectedContent)

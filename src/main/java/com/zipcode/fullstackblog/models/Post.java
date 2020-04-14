@@ -33,9 +33,7 @@ public class Post
     @JsonIgnoreProperties("posts")
     private Set<Tag> tags;
 
-    public Post()
-    {
-    }
+    public Post() {}
 
     public Post(String header, String author, String text, String imageUrl)
     {
