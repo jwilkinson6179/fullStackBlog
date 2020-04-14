@@ -28,11 +28,11 @@ public class BoardController {
     }
 
     @GetMapping("/boards/list")
-    @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})
+    @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
     public static Collection<Board> getAllBoards() { return serv.findAll(); }
 
     @GetMapping("/boards/posts/{id}")
-    @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})
+    @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
     public static Collection<Post> getAllPosts(@PathVariable Long id) {
         Optional<Board> p = serv.findById(id);
         if (p.isPresent()) {
@@ -66,7 +66,7 @@ public class BoardController {
 
     @Valid
     @PostMapping("/boards")
-    @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})
+    @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
     public ResponseEntity<?> save(@RequestBody Board board)
     {
         board = serv.create(board);
@@ -80,7 +80,7 @@ public class BoardController {
     }
 
     @PutMapping("/boards/{id}")
-    @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})
+    @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
     public ResponseEntity<?> editBoard(@RequestBody Board post, @PathVariable Long id)
     {
         serv.create(post);
@@ -89,7 +89,7 @@ public class BoardController {
 
 
     @DeleteMapping("/boards/{id}")
-    @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})
+    @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
     public ResponseEntity<?> delete(@PathVariable Long id)
     {
         serv.delete(id);
