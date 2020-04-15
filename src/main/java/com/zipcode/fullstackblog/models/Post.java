@@ -2,10 +2,11 @@ package com.zipcode.fullstackblog.models;
 
 import com.fasterxml.jackson.annotation.*;
 import com.zipcode.fullstackblog.controllers.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -17,6 +18,11 @@ public class Post
     private Long id;@ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnoreProperties({"allPosts", "posts"})
     private Board board;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "post", targetEntity = Comment.class)
+    @JsonIgnoreProperties("post")
+    @Fetch(value = FetchMode.SUBSELECT)
+    private List<Comment> comments;
 
     private String header;
     private String author;
@@ -44,6 +50,7 @@ public class Post
         this.createTimestamp = LocalDateTime.now();
         this.tags = new HashSet<>();
         this.board = new Board();
+        this.comments = new ArrayList<>();
     }
 
     public Post(String header, String author, String text, String imageUrl, boolean timestamp)
@@ -57,6 +64,7 @@ public class Post
         }
         this.tags = new HashSet<>();
         this.board = new Board();
+        this.comments = new ArrayList<>();
     }
 
     public void editPost(Post newPost)
@@ -132,6 +140,21 @@ public class Post
         return tags;
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        for (Comment cmt : comments) {
+            for (Comment c : CommentController.getServ().findAll()) {
+                if (c.equals(cmt)) {
+                    cmt = c;
+                }
+            }
+        }
+        this.comments = comments;
+    }
+
     public void setTags(Set<Tag> tags) {
         for (Tag tag : tags) {
             for (Tag t : TagController.getServ().findAll()) {
@@ -179,4 +202,6 @@ public class Post
     {
         return Objects.hash(getId());
     }
+
+
 }
