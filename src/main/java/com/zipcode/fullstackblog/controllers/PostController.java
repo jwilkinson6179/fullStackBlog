@@ -61,7 +61,20 @@ public class PostController
         return new ResponseEntity<>(newPostUri, HttpStatus.CREATED);
     }
 
+    @PutMapping("/posts/{id}")
+    @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
+    public ResponseEntity<?> editPost(@RequestBody Post post, @PathVariable Long id) {
+        System.out.println("I am Batman");
+        serv.update(post, id);
+        return new ResponseEntity<>(post, HttpStatus.OK);
+    }
 
+    @DeleteMapping("/posts/{id}")
+    @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
+    public static ResponseEntity<?> delete(@PathVariable Long id) {
+        serv.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
     /* CURRENT UNUSED BY FRONTEND */
     /*@GetMapping("/posts")
@@ -84,18 +97,6 @@ public class PostController
         return new ResponseEntity<>(newPostUri, HttpStatus.CREATED);
     }
 
-    @PutMapping("/posts/{id}")
-    @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
-    public ResponseEntity<?> editPost(@RequestBody Post post, @PathVariable Long id) {
-        serv.update(post, id);
-        return new ResponseEntity<>(post, HttpStatus.OK);
-    }
-
-    @DeleteMapping("/posts/{id}")
-    @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
-    public ResponseEntity<?> delete(@PathVariable Long id) {
-        serv.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }*/
+    */
     /* CURRENT UNUSED BY FRONTEND */
 }
