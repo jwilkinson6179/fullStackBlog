@@ -35,7 +35,7 @@ public class BoardServiceTest {
 
     @Test
     @DisplayName("Test findById Success")
-    public void tetFindByIdSuccess() {
+    public void testFindByIdSuccess() {
 
         // Set up mock object and repository
         Board mockBoard = new Board("Hello");
@@ -64,7 +64,7 @@ public class BoardServiceTest {
     }
     @Test
     @DisplayName("Test save product")
-    public void testSave(){
+    public void testCreate(){
         Board mockBoard = new Board("Hello");
         doReturn(mockBoard).when(boardRepository).save(any());
 
