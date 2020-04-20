@@ -1,12 +1,16 @@
 package com.zipcode.fullstackblog.ModelTests;
 
+import com.zipcode.fullstackblog.models.Comment;
 import com.zipcode.fullstackblog.models.Post;
 import com.zipcode.fullstackblog.models.Tag;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -129,8 +133,37 @@ public class PostTest {
             assertEquals(expected, actual);
         }
     }
+    @Test
+    public void commentsTest() {
+        Post post = new Post();
 
-    public static class CommentTest {
+        Comment c1 = new Comment();
+        Comment c2 = new Comment();
+        Comment c3 = new Comment();
+
+        List<Comment> comments = new ArrayList<>();
+        post.setComments(comments);
+
+        comments.add(c1);
+        comments.add(c2);
+        comments.add(c3);
+
+        Integer expected = 3;
+        Integer actual = post.getComments().size();
+
+        Assert.assertEquals(expected, actual);
 
     }
+
+    @Test
+    public void timeTest(){
+        Post post = new Post();
+        post.setCreateTimestamp(LocalDateTime.now());
+
+        post.setUpdateTimestamp(LocalDateTime.now());
+
+        Assert.assertNotNull(post.getCreateTimestamp());
+        Assert.assertNotNull(post.getUpdateTimestamp());
+    }
+
 }
