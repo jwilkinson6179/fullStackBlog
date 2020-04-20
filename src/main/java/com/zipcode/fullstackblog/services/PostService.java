@@ -2,7 +2,7 @@ package com.zipcode.fullstackblog.services;
 
 import com.zipcode.fullstackblog.controllers.*;
 import com.zipcode.fullstackblog.models.*;
-import com.zipcode.fullstackblog.repositories.PostRepository;
+import com.zipcode.fullstackblog.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,28 +15,33 @@ import java.util.*;
 public class PostService
 {
     private PostRepository repo;
+    private BoardRepository boardRepo;
 
     @Autowired
-    public PostService(PostRepository repo) { this.repo = repo; }
+    public PostService(PostRepository repo, BoardRepository brdRepo) {
+        this.repo = repo;
+        this.boardRepo = brdRepo;
+    }
 
     public Post create(Post post)
     {
         boolean found = false;
         if (post.getBoard() != null) {
-            for (Board b : BoardController.getServ().findAll()) {
-                if (b.getTitle().equals(post.getBoard().getTitle())) {
-                    post.setBoard(b);
-                    found = true;
-                    break;
+            for (Board b : boardRepo.findAll()) {
+                if (b != null && post.getBoard() != null && b.getTitle() != null) {
+                    if (b.getTitle().equals(post.getBoard().getTitle())) {
+                        post.setBoard(b);
+                        found = true;
+                        break;
+                    }
                 }
             }
         }
         if (!found) {
             if (post.getBoard() == null) {
-                BoardController.getServ().create(new Board("General"));
+                boardRepo.save(new Board("General"));
             } else {
-                System.out.println(post.getBoard().getTitle());
-                BoardController.getServ().create(post.getBoard());
+                boardRepo.save(post.getBoard());
             }
         }
         return this.repo.save(post);

@@ -3,11 +3,13 @@ package com.zipcode.fullstackblog.ModelTests;
 import com.zipcode.fullstackblog.models.Post;
 import com.zipcode.fullstackblog.models.Tag;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.HashSet;
 import java.util.Set;
+
+import static org.junit.Assert.assertEquals;
 
 public class PostTest {
 
@@ -93,6 +95,42 @@ public class PostTest {
         Integer actual = post.getTags().size();
 
         Assert.assertEquals(expected, actual);
+
+    }
+
+    public static class TagTest
+    {
+        Tag testTagA;
+        Tag testTagB;
+
+        @Before
+        public void setup()
+        {
+            testTagA = new Tag(1L, "testing");
+            testTagB = new Tag(2L, "testing");
+        }
+
+        @org.junit.Test
+        public void testForEquality()
+        {
+            assertEquals(testTagA, testTagB);
+        }
+
+        @org.junit.Test
+        public void testSetCorrectness()
+        {
+            Integer expected = 1;
+            Set<Tag> testSet = new HashSet<>();
+            Tag testTagC = new Tag(15L, "testing");
+            testSet.add(testTagA);
+            testSet.add(testTagB);
+            Integer actual = testSet.size();
+            System.out.println(actual);
+            assertEquals(expected, actual);
+        }
+    }
+
+    public static class CommentTest {
 
     }
 }

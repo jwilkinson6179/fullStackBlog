@@ -3,7 +3,7 @@ package com.zipcode.fullstackblog.ControllerTests;
 
 import com.zipcode.fullstackblog.controllers.PostController;
 import com.zipcode.fullstackblog.models.Post;
-import com.zipcode.fullstackblog.services.PostService;
+import com.zipcode.fullstackblog.services.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,6 +33,9 @@ public class PostControllerTest {
     @MockBean
     private PostService postService;
 
+    @MockBean
+    private BoardService boardService;
+
     @InjectMocks
     PostController postController;
 
@@ -53,7 +56,7 @@ public class PostControllerTest {
     @Test
     public void createPost() throws Exception {
         mvc.perform(MockMvcRequestBuilders
-                .post ("/posts")
+                .post ("/api/posts")
                 .content(asJsonString(new Post("sample header", "sample author","sample text","sample img")))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))

@@ -28,11 +28,36 @@ public class BoardController {
     }
 
     @GetMapping("/boards/list")
-    @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})
+    @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
     public static Collection<Board> getAllBoards() { return serv.findAll(); }
 
-    @GetMapping("/boards/posts/{id}")
-    @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})
+    @GetMapping("/boards/{id}")
+    public static ResponseEntity<?> getBoard(@PathVariable Long id)
+    {
+        Optional<Board> p = serv.findById(id);
+        return (p.isPresent()) ? new ResponseEntity<> (p, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @Valid
+    @PostMapping("/boards")
+    @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
+    public ResponseEntity<?> save(@RequestBody Board board)
+    {
+        board = serv.create(board);
+        URI newPollUri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(board.getId())
+                .toUri();
+
+        return new ResponseEntity<>(newPollUri, HttpStatus.CREATED);
+    }
+
+
+
+    /* CURRENT UNUSED BY FRONTEND */
+    /*@GetMapping("/boards/posts/{id}")
+    @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
     public static Collection<Post> getAllPosts(@PathVariable Long id) {
         Optional<Board> p = serv.findById(id);
         if (p.isPresent()) {
@@ -50,13 +75,6 @@ public class BoardController {
         return serv.findAll(pageable);
     }
 
-    @GetMapping("/boards/{id}")
-    public static ResponseEntity<?> getBoard(@PathVariable Long id)
-    {
-        Optional<Board> p = serv.findById(id);
-        return (p.isPresent()) ? new ResponseEntity<> (p, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
     @GetMapping("/boards/actual/{id}")
     public static Board getABoard(@PathVariable Long id)
     {
@@ -64,35 +82,20 @@ public class BoardController {
         return p.orElse(null);
     }
 
-    @Valid
-    @PostMapping("/boards")
-    @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})
-    public ResponseEntity<?> save(@RequestBody Board board)
-    {
-        board = serv.create(board);
-        URI newPollUri = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(board.getId())
-                .toUri();
-
-        return new ResponseEntity<>(newPollUri, HttpStatus.CREATED);
-    }
-
     @PutMapping("/boards/{id}")
-    @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})
+    @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
     public ResponseEntity<?> editBoard(@RequestBody Board post, @PathVariable Long id)
     {
         serv.create(post);
         return new ResponseEntity<>(post, HttpStatus.CREATED);
     }
 
-
     @DeleteMapping("/boards/{id}")
-    @CrossOrigin(origins = {"http://loopyblog.herokuapp.com", "http://localhost:4200"})
+    @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
     public ResponseEntity<?> delete(@PathVariable Long id)
     {
         serv.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
+    }*/
+    /* CURRENT UNUSED BY FRONTEND */
 }
