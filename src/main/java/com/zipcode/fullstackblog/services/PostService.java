@@ -81,6 +81,11 @@ public class PostService
 
     public Collection<Post> getNewestPosts()
     {
-        return repo.findNewPosts();
+        return repo.findNewPosts(5);
+    }
+
+    public Collection<Post> getNewestPosts(Integer numberOfPosts)
+    {
+        return repo.findNewPosts(numberOfPosts);
     }
 }

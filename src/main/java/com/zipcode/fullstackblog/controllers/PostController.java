@@ -69,6 +69,14 @@ public class PostController
         return serv.getNewestPosts();
     }
 
+    @Valid
+    @GetMapping("/posts/newest/{numberOfPosts}")
+    @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
+    public Collection<Post> newPosts(@PathVariable Integer numberOfPosts)
+    {
+        return serv.getNewestPosts(numberOfPosts);
+    }
+
     /* CURRENT UNUSED BY FRONTEND */
     /*@GetMapping("/posts")
     public static Page<Post> getAllPosts(Pageable pageable) {  return serv.findAll(pageable); }

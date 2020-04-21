@@ -15,7 +15,7 @@ public interface PostRepository extends JpaRepository<Post, Long>
     @Query("SELECT p FROM Post p WHERE p.author = :author")
     Page<Post> findAllByName(Pageable page, @Param("author") String author);
 
-    @Query(value = "SELECT * FROM post p ORDER BY p.create_timestamp DESC LIMIT 5",
+    @Query(value = "SELECT * FROM post p ORDER BY p.create_timestamp DESC LIMIT :numberOfPosts",
             nativeQuery = true)
-    Collection<Post> findNewPosts();
+    Collection<Post> findNewPosts(@Param("numberOfPosts") Integer numberOfPosts);
 }
