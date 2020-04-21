@@ -61,7 +61,13 @@ public class PostController
         return new ResponseEntity<>(newPostUri, HttpStatus.CREATED);
     }
 
-
+    @Valid
+    @GetMapping("/posts/newest")
+    @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
+    public Collection<Post> newPosts()
+    {
+        return serv.getNewestPosts();
+    }
 
     /* CURRENT UNUSED BY FRONTEND */
     /*@GetMapping("/posts")

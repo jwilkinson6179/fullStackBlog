@@ -72,6 +72,4 @@ public class PostControllerTest {
             throw new RuntimeException(e);
         }
     }
-
-
 }

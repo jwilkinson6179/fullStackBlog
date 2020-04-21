@@ -1,13 +1,12 @@
 package com.zipcode.fullstackblog.services;
 
-import com.zipcode.fullstackblog.controllers.*;
 import com.zipcode.fullstackblog.models.*;
 import com.zipcode.fullstackblog.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -78,5 +77,10 @@ public class PostService
     {
         this.repo.deleteById(postId);
         return findById(postId).isPresent();
+    }
+
+    public Collection<Post> getNewestPosts()
+    {
+        return repo.findNewPosts();
     }
 }
