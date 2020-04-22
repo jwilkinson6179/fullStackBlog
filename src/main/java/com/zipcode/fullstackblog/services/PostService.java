@@ -94,4 +94,17 @@ public class PostService
     {
         return repo.findByTag(searchTerm);
     }
+
+    public Collection<Post> searchByAllTags(String[] searchTerms)
+    {
+        Set<Post> results = new HashSet<>();
+
+        for(Integer i = 0; i < searchTerms.length; i++)
+        {
+            String term = searchTerms[i];
+            results.add((Post) findByTag(term));
+        }
+
+        return results;
+    }
 }

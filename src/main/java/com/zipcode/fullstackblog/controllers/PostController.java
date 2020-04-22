@@ -87,6 +87,17 @@ public class PostController
         return serv.findByTag(tagName);
     }
 
+    @Valid
+    @GetMapping("/posts/tag")
+    @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
+    public ResponseEntity<Iterable<Post>> searchByTag(@RequestParam String search, @RequestParam(required = false) Boolean all)
+    {
+        String[] arrayOfSearchTerms = search.split(" ");
+
+        Iterable<Post> results = serv.searchByAllTags(arrayOfSearchTerms);
+        return new ResponseEntity(results, HttpStatus.OK);
+    }
+    
     /* CURRENT UNUSED BY FRONTEND */
     /*@GetMapping("/posts")
     public static Page<Post> getAllPosts(Pageable pageable) {  return serv.findAll(pageable); }
