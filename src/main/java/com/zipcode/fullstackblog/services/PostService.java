@@ -43,6 +43,7 @@ public class PostService
                 boardRepo.save(post.getBoard());
             }
         }
+
         return this.repo.save(post);
     }
 
@@ -87,5 +88,10 @@ public class PostService
     public Collection<Post> getNewestPosts(Integer numberOfPosts)
     {
         return repo.findNewPosts(numberOfPosts);
+    }
+
+    public Collection<Post> findByTag(String searchTerm)
+    {
+        return repo.findByTag(searchTerm);
     }
 }

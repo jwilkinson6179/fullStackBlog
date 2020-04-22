@@ -18,12 +18,14 @@ public class PostController
 {
     private static PostService serv;
     private static BoardService brdServ;
+    private TagService tagService;
 
     @Autowired
-    public PostController(PostService ser, BoardService brdSer)
+    public PostController(PostService ser, BoardService brdSer, TagService tagService)
     {
         serv = ser;
         brdServ = brdSer;
+        this.tagService = tagService;
     }
 
     public static PostService getServ() {
@@ -75,6 +77,14 @@ public class PostController
     public Collection<Post> newPosts(@PathVariable Integer numberOfPosts)
     {
         return serv.getNewestPosts(numberOfPosts);
+    }
+
+    @Valid
+    @GetMapping("/posts/tag/{tagName}")
+    @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
+    public Collection<Post> postsByTag(@PathVariable String tagName)
+    {
+        return serv.findByTag(tagName);
     }
 
     /* CURRENT UNUSED BY FRONTEND */

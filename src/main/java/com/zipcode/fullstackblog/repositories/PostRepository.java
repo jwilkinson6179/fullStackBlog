@@ -18,4 +18,8 @@ public interface PostRepository extends JpaRepository<Post, Long>
     @Query(value = "SELECT * FROM post p ORDER BY p.create_timestamp DESC LIMIT :numberOfPosts",
             nativeQuery = true)
     Collection<Post> findNewPosts(@Param("numberOfPosts") Integer numberOfPosts);
+
+    @Query(value = "SELECT * FROM post p LEFT JOIN tagged_posts tp ON tp.post_id = p.id JOIN tag t ON t.id = tp.tag_id WHERE t.name = :searchedTag",
+    nativeQuery = true)
+    Collection<Post> findByTag(@Param("searchedTag") String searchedTag);
 }
