@@ -102,7 +102,11 @@ public class PostService
         for(Integer i = 0; i < searchTerms.length; i++)
         {
             String term = searchTerms[i];
-            results.add((Post) findByTag(term));
+            List<Post> foundPosts = (List<Post>) findByTag(term);
+            for(Post post : foundPosts)
+            {
+                results.add(post);
+            }
         }
 
         return results;
