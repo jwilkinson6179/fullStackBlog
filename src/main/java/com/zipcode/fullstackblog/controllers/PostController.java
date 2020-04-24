@@ -114,12 +114,13 @@ public class PostController
     public ResponseEntity<?> searchByTag(@RequestParam String search, @RequestParam(required = false) Boolean all)
     {
         String[] arrayOfSearchTerms = search.split(" ");
-        ArrayList<String> sterms = new ArrayList<>();//(Arrays.asList(arrayOfSearchTerms));
+        ArrayList<String> sterms = new ArrayList<>();
         for (String s : arrayOfSearchTerms) { sterms.add(s.toLowerCase()); }
         Iterable<Post> results = serv.searchByAllTags(arrayOfSearchTerms);
         List<Post> filtered = new ArrayList<>();
-        if (all) {
+        if (all != null && all) {
             for (Post r: results) {
+                if (r.getTags().size() != arrayOfSearchTerms.length) { continue; }
                 boolean allMatching = true;
                 for (Tag t : r.getTags()) {
                     if (!sterms.contains(t.getName().toLowerCase())) {
@@ -127,9 +128,11 @@ public class PostController
                         break;
                     }
                 }
-                if (allMatching) { filtered.add(r); }
+                if (allMatching) {
+                    filtered.add(r);
+                }
             }
         }
-        return all ? new ResponseEntity<>(filtered, HttpStatus.OK) : new ResponseEntity<>(results, HttpStatus.OK);
+        return all != null && all ? new ResponseEntity<>(filtered, HttpStatus.OK) : new ResponseEntity<>(results, HttpStatus.OK);
     }
 }
