@@ -3,6 +3,7 @@ package com.zipcode.fullstackblog.controllers;
 import com.zipcode.fullstackblog.models.*;
 import com.zipcode.fullstackblog.services.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.cloud.cloudfoundry.*;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +19,14 @@ public class PostController
 {
     private static PostService serv;
     private static BoardService brdServ;
+    private TagService tagService;
 
     @Autowired
-    public PostController(PostService ser, BoardService brdSer)
+    public PostController(PostService ser, BoardService brdSer, TagService tagService)
     {
         serv = ser;
         brdServ = brdSer;
+        this.tagService = tagService;
     }
 
     public static PostService getServ() {
@@ -47,6 +50,14 @@ public class PostController
     @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
     public ResponseEntity<?> save(@RequestBody Post post, @PathVariable long id, @RequestParam String tag)
     {
+        String[] splice = tag.split(" ");
+        for (String s : splice) {
+            Optional<Tag> tagg = tagService.findByName(s);
+            Tag createdTag;
+            createdTag = tagg.orElseGet(() -> new Tag(s));
+            createdTag.addPost(post);
+            post.addTag(createdTag);
+        }
         Optional<Board> foundBoard = brdServ.findById(id);
         if (foundBoard.isPresent()) {
             post.setBoard(foundBoard.get());
@@ -61,41 +72,21 @@ public class PostController
         return new ResponseEntity<>(newPostUri, HttpStatus.CREATED);
     }
 
-    @PutMapping("/posts/{id}")
+    @Valid
+    @GetMapping("/posts/newest")
     @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
-    public ResponseEntity<?> editPost(@RequestBody Post post, @PathVariable Long id) {
-        serv.update(post, id);
-        return new ResponseEntity<>(post, HttpStatus.OK);
+    public Collection<Post> newPosts()
+    {
+        return serv.getNewestPosts();
     }
-
-    @DeleteMapping("/posts/{id}")
-    @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
-    public ResponseEntity<?> delete(@PathVariable Long id) {
-        serv.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    /* CURRENT UNUSED BY FRONTEND */
-    /*@GetMapping("/posts")
-    public static Page<Post> getAllPosts(Pageable pageable) {  return serv.findAll(pageable); }
-
-    @GetMapping("/posts/authors/{author}")
-    public static Page<Post> getAllPosts(Pageable pageable, @PathVariable String author) { return serv.findAll(pageable, author); }
 
     @Valid
-    @PostMapping("/posts")
+    @GetMapping("/posts/newest/{numberOfPosts}")
     @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
-    public ResponseEntity<?> save(@RequestBody Post post) {
-        post = serv.create(post);
-        URI newPostUri = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(post.getId())
-                .toUri();
-
-        return new ResponseEntity<>(newPostUri, HttpStatus.CREATED);
+    public Collection<Post> newPosts(@PathVariable Integer numberOfPosts)
+    {
+        return serv.getNewestPosts(numberOfPosts);
     }
-
     @PutMapping("/posts/{id}")
     @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
     public ResponseEntity<?> editPost(@RequestBody Post post, @PathVariable Long id) {
@@ -103,11 +94,42 @@ public class PostController
         return new ResponseEntity<>(post, HttpStatus.OK);
     }
 
+    @Valid
+    @GetMapping("/posts/tag/{tagName}")
+    @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
+    public Collection<Post> postsByTag(@PathVariable String tagName)
+    {
+        return serv.findByTag(tagName);
+    }
     @DeleteMapping("/posts/{id}")
     @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
     public ResponseEntity<?> delete(@PathVariable Long id) {
         serv.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }*/
-    /* CURRENT UNUSED BY FRONTEND */
+    }
+
+    @Valid
+    @GetMapping("/posts/tag")
+    @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
+    public ResponseEntity<?> searchByTag(@RequestParam String search, @RequestParam(required = false) Boolean all)
+    {
+        String[] arrayOfSearchTerms = search.split(" ");
+        ArrayList<String> sterms = new ArrayList<>();//(Arrays.asList(arrayOfSearchTerms));
+        for (String s : arrayOfSearchTerms) { sterms.add(s.toLowerCase()); }
+        Iterable<Post> results = serv.searchByAllTags(arrayOfSearchTerms);
+        List<Post> filtered = new ArrayList<>();
+        if (all) {
+            for (Post r: results) {
+                boolean allMatching = true;
+                for (Tag t : r.getTags()) {
+                    if (!sterms.contains(t.getName().toLowerCase())) {
+                        allMatching = false;
+                        break;
+                    }
+                }
+                if (allMatching) { filtered.add(r); }
+            }
+        }
+        return all ? new ResponseEntity<>(filtered, HttpStatus.OK) : new ResponseEntity<>(results, HttpStatus.OK);
+    }
 }

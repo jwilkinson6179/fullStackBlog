@@ -1,13 +1,12 @@
 package com.zipcode.fullstackblog.services;
 
-import com.zipcode.fullstackblog.controllers.*;
 import com.zipcode.fullstackblog.models.*;
 import com.zipcode.fullstackblog.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -44,6 +43,7 @@ public class PostService
                 boardRepo.save(post.getBoard());
             }
         }
+
         return this.repo.save(post);
     }
 
@@ -78,5 +78,30 @@ public class PostService
     {
         this.repo.deleteById(postId);
         return findById(postId).isPresent();
+    }
+
+    public Collection<Post> getNewestPosts()
+    {
+        return repo.findNewPosts(5);
+    }
+
+    public Collection<Post> getNewestPosts(Integer numberOfPosts)
+    {
+        return repo.findNewPosts(numberOfPosts);
+    }
+
+    public Collection<Post> findByTag(String searchTerm)
+    {
+        return repo.findByTag(searchTerm);
+    }
+
+    public Collection<Post> searchByAllTags(String[] searchTerms)
+    {
+        Set<Post> results = new HashSet<>();
+        for (String term : searchTerms) {
+            List<Post> foundPosts = (List<Post>) findByTag(term);
+            results.addAll(foundPosts);
+        }
+        return results;
     }
 }
