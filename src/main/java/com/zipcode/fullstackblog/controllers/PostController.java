@@ -18,12 +18,14 @@ public class PostController
 {
     private static PostService serv;
     private static BoardService brdServ;
+    private TagService tagService;
 
     @Autowired
-    public PostController(PostService ser, BoardService brdSer)
+    public PostController(PostService ser, BoardService brdSer, TagService tagService)
     {
         serv = ser;
         brdServ = brdSer;
+        this.tagService = tagService;
     }
 
     public static PostService getServ() {
@@ -61,8 +63,41 @@ public class PostController
         return new ResponseEntity<>(newPostUri, HttpStatus.CREATED);
     }
 
+    @Valid
+    @GetMapping("/posts/newest")
+    @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
+    public Collection<Post> newPosts()
+    {
+        return serv.getNewestPosts();
+    }
 
+    @Valid
+    @GetMapping("/posts/newest/{numberOfPosts}")
+    @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
+    public Collection<Post> newPosts(@PathVariable Integer numberOfPosts)
+    {
+        return serv.getNewestPosts(numberOfPosts);
+    }
 
+    @Valid
+    @GetMapping("/posts/tag/{tagName}")
+    @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
+    public Collection<Post> postsByTag(@PathVariable String tagName)
+    {
+        return serv.findByTag(tagName);
+    }
+
+    @Valid
+    @GetMapping("/posts/tag")
+    @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
+    public ResponseEntity<Iterable<Post>> searchByTag(@RequestParam String search, @RequestParam(required = false) Boolean all)
+    {
+        String[] arrayOfSearchTerms = search.split(" ");
+
+        Iterable<Post> results = serv.searchByAllTags(arrayOfSearchTerms);
+        return new ResponseEntity(results, HttpStatus.OK);
+    }
+    
     /* CURRENT UNUSED BY FRONTEND */
     /*@GetMapping("/posts")
     public static Page<Post> getAllPosts(Pageable pageable) {  return serv.findAll(pageable); }

@@ -27,6 +27,11 @@ public class TagService {
 
     public Optional<Tag> findById(long tagId) { return this.repo.findById(tagId); }
 
+    public Optional<Tag> findByName(String name)
+    {
+        return repo.findByName(name);
+    }
+
     public Boolean delete(long boardId)
     {
         this.repo.deleteById(boardId);
