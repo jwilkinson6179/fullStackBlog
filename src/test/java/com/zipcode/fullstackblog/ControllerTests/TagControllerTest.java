@@ -36,7 +36,7 @@ public class TagControllerTest {
     @Test
     public void testPostTag() throws Exception {
         Tag tag = new Tag("Hello");
-        tag.setId(1L);
+
         BDDMockito
                 .doReturn(tag)
                 .when(service)

@@ -45,7 +45,7 @@ public class PostController
     @Valid
     @PostMapping("/posts/{id}")
     @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
-    public ResponseEntity<?> save(@RequestBody Post post, @PathVariable long id)
+    public ResponseEntity<?> save(@RequestBody Post post, @PathVariable long id, @RequestParam String tag)
     {
         Optional<Board> foundBoard = brdServ.findById(id);
         if (foundBoard.isPresent()) {
