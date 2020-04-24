@@ -3,11 +3,8 @@ package com.zipcode.fullstackblog.ModelTests;
 import com.zipcode.fullstackblog.models.Comment;
 import com.zipcode.fullstackblog.models.Post;
 import com.zipcode.fullstackblog.models.User;
-import javafx.geometry.Pos;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
-
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
