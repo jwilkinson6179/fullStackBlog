@@ -64,14 +64,13 @@ public class PostController
     @PutMapping("/posts/{id}")
     @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
     public ResponseEntity<?> editPost(@RequestBody Post post, @PathVariable Long id) {
-        System.out.println("I am Batman");
         serv.update(post, id);
         return new ResponseEntity<>(post, HttpStatus.OK);
     }
 
     @DeleteMapping("/posts/{id}")
     @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
-    public static ResponseEntity<?> delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         serv.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -79,10 +78,8 @@ public class PostController
     /* CURRENT UNUSED BY FRONTEND */
     /*@GetMapping("/posts")
     public static Page<Post> getAllPosts(Pageable pageable) {  return serv.findAll(pageable); }
-
     @GetMapping("/posts/authors/{author}")
     public static Page<Post> getAllPosts(Pageable pageable, @PathVariable String author) { return serv.findAll(pageable, author); }
-
     @Valid
     @PostMapping("/posts")
     @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
@@ -93,10 +90,19 @@ public class PostController
                 .path("/{id}")
                 .buildAndExpand(post.getId())
                 .toUri();
-
         return new ResponseEntity<>(newPostUri, HttpStatus.CREATED);
     }
-
-    */
+    @PutMapping("/posts/{id}")
+    @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
+    public ResponseEntity<?> editPost(@RequestBody Post post, @PathVariable Long id) {
+        serv.update(post, id);
+        return new ResponseEntity<>(post, HttpStatus.OK);
+    }
+    @DeleteMapping("/posts/{id}")
+    @CrossOrigin(origins = {"https://loopyblog.herokuapp.com", "http://localhost:4200"})
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        serv.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }*/
     /* CURRENT UNUSED BY FRONTEND */
 }
